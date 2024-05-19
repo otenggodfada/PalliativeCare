@@ -64,15 +64,15 @@ function changedropiconcolor() {
         >
           <a
             href="/login"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-secondaryButton hover:text-white"
             role="menuitem"
           >
             Login
           </a>
     
           <a
-            href="#"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            href="/register"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-secondaryButton hover:text-white"
             role="menuitem"
           >
             Signup

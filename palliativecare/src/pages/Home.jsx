@@ -36,17 +36,9 @@ const Home = () => {
           <div className=" pl-4 flex-row flex">
           <img className=" size-9" src={logo} alt="logo" />
             <h1 className="text-2xl font-bold">alliative Care</h1>
-          
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff145b"><path d="M360-160q-19 0-34-11t-22-28l-92-241H40v-80h228l92 244 184-485q7-17 22-28t34-11q19 0 34 11t22 28l92 241h172v80H692l-92-244-184 485q-7 17-22 28t-34 11Z"/></svg>
           </div>
-          {/* <div className="text-sm font-medium text-white ">
-            <span className="hover:text-secondaryButton p-2">
-              <a href="/login">Signin</a>
-            </span>
-            <span className="hover:text-secondaryButton">
-              <a href="/register">Signup</a>
-            </span>
-            
-          </div> */}
+      
 
 <Dropdown/>
         </div>
