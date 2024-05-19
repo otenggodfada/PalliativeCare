@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primaryBackground: '#F5F5F5',
+        primaryBackground: '#F8F9FE',
         primaryText: '#4B4B4B',
         secondaryText: '#808080',
         primaryButton: '#261F57',
@@ -16,6 +16,7 @@ export default {
         accent: '#020D48',
         positiveNotification: '#508AA0',
         warmAccent: '#F5DEB3',
+        
       },
     },
   },

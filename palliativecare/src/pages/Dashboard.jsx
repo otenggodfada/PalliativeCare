@@ -1,5 +1,5 @@
 /** @format */
-
+import img1 from "../assets/images/im1.png"
 const Dashboard = () => {
   return (
     <section className="bg-offWhite pt-4 rounded mt-10 ">
@@ -71,10 +71,18 @@ const Dashboard = () => {
 
           {/* Brain Specialist */}
           <div className="w-32 h-48 pl-6 pr-7 pt-7 pb-6  bg-secondaryButton rounded-3xl flex-col justify-end items-center gap-7 inline-flex hover:bg-blue-600 hover:text-rose-500">
-          <svg width="56" height="65" viewBox="0 0 56 65" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M20.125 0C23.5047 0 26.25 3.18652 26.25 7.10938V57.8906C26.25 61.8135 23.5047 65 20.125 65C16.9641 65 14.3609 62.2197 14.0328 58.6396C13.4641 58.8174 12.8625 58.9062 12.25 58.9062C8.38906 58.9062 5.25 55.2627 5.25 50.7812C5.25 49.8418 5.39219 48.9277 5.64375 48.0898C2.34062 46.6426 0 42.9355 0 38.5938C0 34.5439 2.04531 31.04 5.00937 29.415C4.05781 28.0312 3.5 26.2793 3.5 24.375C3.5 20.4775 5.8625 17.2275 9.0125 16.4277C8.8375 15.7295 8.75 14.9805 8.75 14.2188C8.75 10.4229 11.0031 7.22363 14.0328 6.33496C14.3609 2.78027 16.9641 0 20.125 0ZM35.875 0C39.0359 0 41.6281 2.78027 41.9672 6.33496C45.0078 7.22363 47.25 10.4102 47.25 14.2188C47.25 14.9805 47.1625 15.7295 46.9875 16.4277C50.1375 17.2148 52.5 20.4775 52.5 24.375C52.5 26.2793 51.9422 28.0312 50.9906 29.415C53.9547 31.04 56 34.5439 56 38.5938C56 42.9355 53.6594 46.6426 50.3562 48.0898C50.6078 48.9277 50.75 49.8418 50.75 50.7812C50.75 55.2627 47.6109 58.9062 43.75 58.9062C43.1375 58.9062 42.5359 58.8174 41.9672 58.6396C41.6391 62.2197 39.0359 65 35.875 65C32.4953 65 29.75 61.8135 29.75 57.8906V7.10938C29.75 3.18652 32.4953 0 35.875 0Z" fill="white"/>
-</svg>
-
+            <svg
+              width="56"
+              height="65"
+              viewBox="0 0 56 65"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20.125 0C23.5047 0 26.25 3.18652 26.25 7.10938V57.8906C26.25 61.8135 23.5047 65 20.125 65C16.9641 65 14.3609 62.2197 14.0328 58.6396C13.4641 58.8174 12.8625 58.9062 12.25 58.9062C8.38906 58.9062 5.25 55.2627 5.25 50.7812C5.25 49.8418 5.39219 48.9277 5.64375 48.0898C2.34062 46.6426 0 42.9355 0 38.5938C0 34.5439 2.04531 31.04 5.00937 29.415C4.05781 28.0312 3.5 26.2793 3.5 24.375C3.5 20.4775 5.8625 17.2275 9.0125 16.4277C8.8375 15.7295 8.75 14.9805 8.75 14.2188C8.75 10.4229 11.0031 7.22363 14.0328 6.33496C14.3609 2.78027 16.9641 0 20.125 0ZM35.875 0C39.0359 0 41.6281 2.78027 41.9672 6.33496C45.0078 7.22363 47.25 10.4102 47.25 14.2188C47.25 14.9805 47.1625 15.7295 46.9875 16.4277C50.1375 17.2148 52.5 20.4775 52.5 24.375C52.5 26.2793 51.9422 28.0312 50.9906 29.415C53.9547 31.04 56 34.5439 56 38.5938C56 42.9355 53.6594 46.6426 50.3562 48.0898C50.6078 48.9277 50.75 49.8418 50.75 50.7812C50.75 55.2627 47.6109 58.9062 43.75 58.9062C43.1375 58.9062 42.5359 58.8174 41.9672 58.6396C41.6391 62.2197 39.0359 65 35.875 65C32.4953 65 29.75 61.8135 29.75 57.8906V7.10938C29.75 3.18652 32.4953 0 35.875 0Z"
+                fill="white"
+              />
+            </svg>
 
             <div className="text-center text-white text-base font-semibold font-['Inter']">
               Brain
@@ -85,15 +93,95 @@ const Dashboard = () => {
         </div>
       </div>
 
-        {/* Top Caretakers */}
-        <div className="flex justify-between pt-5 pb-5">
-          <span>
-            <h2 className=" text-xl font-medium">Top CareTakers</h2>
-          </span>{" "}
-          <span>
-            <h3 className="font-medium">See all</h3>
-          </span>
+      {/* Top Caretakers */}
+      <div className="flex justify-between pt-5 pb-5">
+        <span>
+          <h2 className=" text-xl font-medium">Top CareTakers</h2>
+        </span>{" "}
+        <span>
+          <h3 className="font-medium">See all</h3>
+        </span>
+      </div>
+
+   <div className=" space-y-3 p-0">
+   <div className="flex p-2 w-full h-17  bg-white rounded-2xl shadow">
+        
+        <img
+          className="w-28 h-24 rounded-2xl"
+          src={img1}
+        />
+     
+  <div className="p-2  flex-col flex justify-center  space-y-1 ">
+
+        {" "}
+        <div className="  text-black text-base font-semibold font-['Inter']">
+          Dr. Wilson
         </div>
+        <div className=" text-black text-sm font-normal font-['Inter']">
+          General Pulmonologist
+        </div>
+  
+      <div className="flex">
+        {" "}
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M7 0C8.85652 0 10.637 0.737498 11.9497 2.05025C13.2625 3.36301 14 5.14348 14 7C14 8.85652 13.2625 10.637 11.9497 11.9497C10.637 13.2625 8.85652 14 7 14C5.14348 14 3.36301 13.2625 2.05025 11.9497C0.737498 10.637 0 8.85652 0 7C0 5.14348 0.737498 3.36301 2.05025 2.05025C3.36301 0.737498 5.14348 0 7 0ZM6.34375 3.28125V7C6.34375 7.21875 6.45312 7.42383 6.63633 7.54688L9.26133 9.29688C9.56211 9.49922 9.96953 9.41719 10.1719 9.11367C10.3742 8.81016 10.2922 8.40547 9.98867 8.20312L7.65625 6.65V3.28125C7.65625 2.91758 7.36367 2.625 7 2.625C6.63633 2.625 6.34375 2.91758 6.34375 3.28125Z"
+            fill="black"
+          />
+        </svg>
+        <div className="  text-black text-xs font-semibold font-['Inter']">
+          10:00 AM - 12:30 PM
+        </div>
+      </div>
+  </div>
+    </div>
+    <div className="flex p-2 w-full h-17  bg-white rounded-2xl shadow">
+        
+        <img
+          className="w-28 h-24 rounded-2xl"
+          src={img1}
+        />
+     
+  <div className="p-2  flex-col flex justify-center  space-y-1 ">
+
+        {" "}
+        <div className="  text-black text-base font-semibold font-['Inter']">
+          Dr. Wilson
+        </div>
+        <div className=" text-black text-sm font-normal font-['Inter']">
+          General Pulmonologist
+        </div>
+  
+      <div className="flex">
+        {" "}
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M7 0C8.85652 0 10.637 0.737498 11.9497 2.05025C13.2625 3.36301 14 5.14348 14 7C14 8.85652 13.2625 10.637 11.9497 11.9497C10.637 13.2625 8.85652 14 7 14C5.14348 14 3.36301 13.2625 2.05025 11.9497C0.737498 10.637 0 8.85652 0 7C0 5.14348 0.737498 3.36301 2.05025 2.05025C3.36301 0.737498 5.14348 0 7 0ZM6.34375 3.28125V7C6.34375 7.21875 6.45312 7.42383 6.63633 7.54688L9.26133 9.29688C9.56211 9.49922 9.96953 9.41719 10.1719 9.11367C10.3742 8.81016 10.2922 8.40547 9.98867 8.20312L7.65625 6.65V3.28125C7.65625 2.91758 7.36367 2.625 7 2.625C6.63633 2.625 6.34375 2.91758 6.34375 3.28125Z"
+            fill="black"
+          />
+        </svg>
+        <div className="  text-black text-xs font-semibold font-['Inter']">
+          10:00 AM - 12:30 PM
+        </div>
+      </div>
+  </div>
+
+    </div>
+  
+   </div>
+
     </section>
   );
 };

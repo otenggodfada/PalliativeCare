@@ -14,4 +14,11 @@
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
   }
+  
 }
+
+@layer base {
+    body {
+      @apply bg-primaryBackground; /* Replace with any Tailwind CSS background class or your custom class */
+    }
+  }
