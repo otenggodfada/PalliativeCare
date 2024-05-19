@@ -5,7 +5,7 @@ import logo from "../assets/images/logo.png"
 import Dashboard from "./Dashboard";
 import Settings from "./Settings";
 import Profile from "./Profile";
-
+import Dropdown from '../components/dropdwon';
 const Home = () => {
   const [navigation, setNavigations] = useState(Dashboard);
   const [ishome, setHome]= useState(true)
@@ -38,14 +38,17 @@ const Home = () => {
             <h1 className="text-2xl font-bold">alliative Care</h1>
           
           </div>
-          <div className="text-sm font-medium text-white ">
+          {/* <div className="text-sm font-medium text-white ">
             <span className="hover:text-secondaryButton p-2">
               <a href="/login">Signin</a>
             </span>
             <span className="hover:text-secondaryButton">
               <a href="/register">Signup</a>
             </span>
-          </div>
+            
+          </div> */}
+
+<Dropdown/>
         </div>
       </header>
 
@@ -111,6 +114,7 @@ const Home = () => {
           </div>
         </div>
       </footer>
+      
     </div>
   );
 };
