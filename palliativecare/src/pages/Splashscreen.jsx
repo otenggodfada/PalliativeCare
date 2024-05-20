@@ -4,14 +4,15 @@ import im2 from "../assets/images/im2.png";
 const SplashScreen = () => {
   return (
     <div className="flex flex-col items-center justify-end min-h-screen ">
-      <div className="p-2 flex flex-col   items-center">
+      <div className="p-2 flex flex-col   items-center"><svg xmlns="http://www.w3.org/2000/svg" height="27px" viewBox="0 -960 960 960" width="27px" fill="#ff145b"><path d="M360-160q-19 0-34-11t-22-28l-92-241H40v-80h228l92 244 184-485q7-17 22-28t34-11q19 0 34 11t22 28l92 241h172v80H692l-92-244-184 485q-7 17-22 28t-34 11Z"/></svg>
   <div className=" text-center text-fuchsia-950  text-3xl font-bold  font-['Inter']">We are always ready for <br/>your health care</div>
-  <div className=" text-center"><span className="text-fuchsia-950 text-2x1 font-semibold font-['Inter']">Contacting a palliative care now is<br/></span><span className="text-rose-600  font-semibold font-['Inter']"> easy and quick!</span></div>
+  <div className=" text-center"><span className="text-fuchsia-950 text-2x1 font-semibold font-['Inter']">Contacting a palliative care now is<br/></span><span className="text-mypink  font-semibold font-['Inter']"> easy and quick!</span></div>
   {/* <img className="w-8 h-9 " src={logo} /> */}
 </div>
       <div className="w-full h-full pt-20 bg-white rounded-tl-full rounded-tr-full  shadow-blue-400 shadow-2xl flex-col justify-end items-center inline-flex">
+      <img className="w-14 h-16" src={logo} />
         <img className="w-full h-full" src={im2} />
-        <div className="w-12 h-12 px-2 py-2  animate-pulse  origin-center absolute  bottom-16  rotate-[38.01deg] bg-rose-600 rounded justify-center items-center inline-flex">
+        <div className="w-12 h-12 px-2 py-2  animate-pulse  origin-center absolute  bottom-16  rotate-[38.01deg] bg-mypink rounded justify-center items-center inline-flex">
           <svg
             className="  rotate-[-50.01deg]"
             width="24"

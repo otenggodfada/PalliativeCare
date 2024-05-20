@@ -12,7 +12,7 @@ const Register = () => {
       <a href="home">Home</a>
       </div>
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-semibold text-center mb-6 text-accent">
+        <h2 className="text-2xl font-semibold text-center mb-6 text-mypink">
           Sign Up
         </h2>
         <form className="space-y-4">
@@ -70,14 +70,14 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-accent text-white font-semibold rounded-lg shadow-md hover:bg-primaryButton/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primaryButton"
+            className="w-full py-2 px-4 bg-mypink text-white font-semibold rounded-lg shadow-md hover:bg-primaryButton/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primaryButton"
           >
             Sign Up
           </button>
         </form>
         <p className="mt-6 text-center text-secondaryText">
           Already have an account?{" "}
-          <a href="/login" className="text-accent hover:underline">
+          <a href="/login" className="text-mypink hover:underline">
             Log in
           </a>
         </p>

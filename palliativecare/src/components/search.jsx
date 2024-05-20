@@ -34,7 +34,7 @@ const ChatBot = () => {
   return (
     // Searchcontainer
     <>
-    <div>
+    <div className="pt-5">
         {/* Search box */}
       <div className="w-full h-12 pl-3.5  rounded-3xl border border-mypink justify-between items-center flex ">
         {/* Search icon */}
