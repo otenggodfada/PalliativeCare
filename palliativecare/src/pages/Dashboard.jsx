@@ -1,10 +1,15 @@
 /** @format */
 import img1 from "../assets/images/im1.png"
+import React from 'react';
+import Search from "../components/search";
+
 const Dashboard = () => {
+
+
   return (
     <section className="bg-offWhite pt-4 rounded mt-10 ">
       <div>
-        <span className="text-rose-500 text-2xl font-semibold font-['Inter']">
+        <span className="text-mypink text-2xl font-semibold font-['Inter']">
           Find
         </span>
         <span className=" text-2xl font-semibold font-['Inter']">
@@ -13,6 +18,7 @@ const Dashboard = () => {
           cares
         </span>
       </div>
+<Search></Search>
       <div>
         {/* Categories */}
         <div className="flex justify-between pt-5 pb-5">
@@ -48,7 +54,7 @@ const Dashboard = () => {
             </div>
           </div>
           {/* Heart Specialist */}
-          <div className="w-32 h-48 pl-6 pr-7 pt-7 pb-6  bg-rose-500 rounded-3xl flex-col justify-end items-center gap-7 inline-flex hover:bg-blue-600 hover:text-rose-500">
+          <div className="w-32 h-48 pl-6 pr-7 pt-7 pb-6  bg-mypink rounded-3xl flex-col justify-end items-center gap-7 inline-flex hover:bg-blue-600 hover:text-rose-500">
             <svg
               width="56"
               height="66"

@@ -6,6 +6,7 @@ import Dashboard from "./Dashboard";
 import Settings from "./Settings";
 import Profile from "./Profile";
 import Dropdown from '../components/dropdwon';
+import DrawerWithNavigation from "../components/drawer";
 const Home = () => {
   const [navigation, setNavigations] = useState(Dashboard);
   const [ishome, setHome]= useState(true)
@@ -23,15 +24,7 @@ const Home = () => {
         <div className="flex   items-center justify-between">
           {" "}
           <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="#e8eaed"
-            >
-              <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
-            </svg>
+         <DrawerWithNavigation></DrawerWithNavigation>
           </div>{" "}
           <div className=" pl-4 flex-row flex">
           <img className=" size-9" src={logo} alt="logo" />

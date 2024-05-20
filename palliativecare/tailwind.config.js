@@ -1,6 +1,11 @@
+const withMT = require("@material-tailwind/react/utils/withMT");
+
 /** @type {import('tailwindcss').Config} */
 // tailwind.config.js
-export default {
+
+
+
+module.exports = withMT({
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -16,9 +21,10 @@ export default {
         accent: '#020D48',
         positiveNotification: '#508AA0',
         warmAccent: '#F5DEB3',
+        mypink:'#ff145b',
         
       },
     },
   },
   plugins: [],
-}
+});
