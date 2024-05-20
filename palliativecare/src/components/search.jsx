@@ -1,42 +1,64 @@
 /** @format */
-
+// import { Input, Button } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import { OpenAI } from "openai";
 
 const ChatBot = () => {
   const [response, setResponse] = useState("");
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const openai = new OpenAI({
-          apiKey: "sk-proj-YYLl0hvwMatRfvLyd5FeT3BlbkFJmVeMDhBkMHmbsHuvPi7w",
-          dangerouslyAllowBrowser: true,
-          organization: "org-wTvJC6GCcbtSAZDNjE87AH7x",
-        });
+//   useEffect(() => {
+//     async function fetchData() {
+//       try {
+//         const openai = new OpenAI({
+//           apiKey: "sk-proj-YYLl0hvwMatRfvLyd5FeT3BlbkFJmVeMDhBkMHmbsHuvPi7w",
+//           dangerouslyAllowBrowser: true,
+//           organization: "org-wTvJC6GCcbtSAZDNjE87AH7x",
+//         });
 
-        const completion = await openai.chat.completions.create({
-          messages: [{ role: "user", content: "You are a helpful assistant." }],
-          model: "tts-1-hd",
-        });
+//         const completion = await openai.chat.completions.create({
+//           messages: [{ role: "user", content: "You are a helpful assistant." }],
+//           model: "tts-1-hd",
+//         });
 
-        console.log(completion.choices[0]);
-        setResponse(completion.choices[0].message.content);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        // Handle error, set response to an error message or handle it accordingly
-      }
-    }
+//         console.log(completion.choices[0]);
+//         setResponse(completion.choices[0].message.content);
+//       } catch (error) {
+//         console.error("Error fetching data:", error);
+//         // Handle error, set response to an error message or handle it accordingly
+//       }
+//     }
 
-    fetchData();
-  }, []); // Empty dependency array ensures this effect runs only once after initial render
+//     fetchData();
+//   }, []); // Empty dependency array ensures this effect runs only once after initial render
 
   return (
+    // Searchcontainer
+    <>
     <div>
-      <div className="w-full h-12 pl-3.5  rounded-3xl border border-mypink justify-end items-center gap-60 inline-flex">
-        <div className="w-24 h-12 px-8 py-3.5 bg-mypink rounded-tl-3xl rounded-tr-3xl rounded-br-3xl justify-center items-center inline-flex">
+        {/* Search box */}
+      <div className="w-full h-12 pl-3.5  rounded-3xl border border-mypink justify-between items-center flex ">
+        {/* Search icon */}
+        <svg
+          width="21"
+          height="21"
+          viewBox="0 0 21 21"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17.0633 8.53C17.0633 10.4123 16.4522 12.1511 15.4226 13.5619L20.6155 18.7578C21.1282 19.2704 21.1282 20.1029 20.6155 20.6155C20.1027 21.1282 19.2701 21.1282 18.7574 20.6155L13.5645 15.4196C12.1535 16.4531 10.4144 17.06 8.53167 17.06C3.81874 17.06 0 13.242 0 8.53C0 3.818 3.81874 0 8.53167 0C13.2446 0 17.0633 3.818 17.0633 8.53ZM8.53167 14.4354C9.30732 14.4354 10.0754 14.2826 10.792 13.9859C11.5086 13.6891 12.1597 13.2541 12.7082 12.7057C13.2567 12.1574 13.6918 11.5064 13.9886 10.7899C14.2854 10.0734 14.4382 9.30551 14.4382 8.53C14.4382 7.75449 14.2854 6.98658 13.9886 6.27011C13.6918 5.55363 13.2567 4.90263 12.7082 4.35426C12.1597 3.8059 11.5086 3.37091 10.792 3.07414C10.0754 2.77736 9.30732 2.62462 8.53167 2.62462C7.75601 2.62462 6.98795 2.77736 6.27133 3.07414C5.55472 3.37091 4.90359 3.8059 4.35511 4.35426C3.80664 4.90263 3.37157 5.55363 3.07474 6.27011C2.7779 6.98658 2.62513 7.75449 2.62513 8.53C2.62513 9.30551 2.7779 10.0734 3.07474 10.7899C3.37157 11.5064 3.80664 12.1574 4.35511 12.7057C4.90359 13.2541 5.55472 13.6891 6.27133 13.9859C6.98795 14.2826 7.75601 14.4354 8.53167 14.4354Z"
+            fill="#FF2B70"
+          />
+        </svg>
+        <div className="relative flex w-full max-w-[24rem]">
+        <input type="search" className=" p-1 border-none bg-transparent focus:border-transparent focus:outline-none" name="" id="" placeholder="Ask AI about symptoms" />
+
+    </div>
+        {/* filter icon */}
+
+        <div className="w-13 h-12 px-5 py-3.5 bg-mypink rounded-tl-3xl rounded-tr-3xl rounded-br-3xl justify-center items-center inline-flex">
           <svg
-            width="30"
+            width="21"
             height="28"
             viewBox="0 0 30 28"
             fill="none"
@@ -50,6 +72,7 @@ const ChatBot = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
