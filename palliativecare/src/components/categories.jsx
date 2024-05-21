@@ -1,21 +1,21 @@
 /** @format */
-import img2 from "../assets/images/im2.png"
-import { useState } from 'react';
+import img2 from "../assets/images/im2.png";
+import { useState } from "react";
 import jasondataa from "../service/categoriesdata";
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Typography,
-    Button,
-    Tooltip,
-    IconButton,
-  } from "@material-tailwind/react";
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Button,
+  Tooltip,
+  IconButton,
+} from "@material-tailwind/react";
 
 const Categories = () => {
   const dataa = jasondataa();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -26,7 +26,7 @@ const Categories = () => {
   );
 
   return (
-    <div className="flex-grow">
+    <div className=" ">
       <header className="bg-accent text-white p-4 fixed top-0 w-screen">
         <div className="flex items-center">
           <a href="/home">
@@ -40,7 +40,7 @@ const Categories = () => {
               <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
             </svg>
           </a>{" "}
-          <h1 className="text-2xl font-bold ml-5">Categories</h1>
+        <div className=" w-full flex justify-center">  <h1 className="text-2xl font-bold ">Categories</h1></div>
         </div>
       </header>
 
@@ -75,35 +75,43 @@ const Categories = () => {
           </div>
         </div>
 
-        {filteredCategories.map((service, index) => (
-          <li key={index} className="mb-4 mt-3">
-           <Card className="w-full max-w-[26rem] shadow-lg">
+        <div>
+          {filteredCategories.map((service, index) => (
+            <li key={index} className="mb-4 mt-3 ">
+              <div className=" w-full shadow bg-white rounded-lg" >
+                {" "}
+             
+                  <CardBody>
+                    <h2 className="text-xl font-semibold">
+                      {service.category}
+                    </h2>
+                    <p>{service.description}</p>
+                    <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
+                      <Tooltip content="Dr.Wilson">
+                        <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+                          <img className="h-5 w-5" src={img2} alt="" />
+                        </span>
+                      </Tooltip>
 
-      <CardBody>
-      <h2 className="text-xl font-semibold">{service.category}</h2>
-            <p>{service.description}</p>
-        <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
-          <Tooltip content="$129 per night">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-         <img className="h-5 w-5" src={img2} alt="" />
-            </span>
-          </Tooltip>
-        
-          <Tooltip content="And +20 more">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-            <div className="h-5 w-5 flex justify-center items-center">+2</div>
-            </span>
-          </Tooltip>
+                      <Tooltip content="+2 more">
+                        <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+                          <div className="h-5 w-5 flex justify-center items-center">
+                            +2
+                          </div>
+                        </span>
+                      </Tooltip>
+                    </div>
+                  </CardBody>
+                  <CardFooter className="pt-3">
+                    <Button size="lg" fullWidth={true} className="bg-mypink">
+                      View all caretakers
+                    </Button>
+                  </CardFooter>
+          
+              </div>
+            </li>
+          ))}
         </div>
-      </CardBody>
-      <CardFooter className="pt-3">
-        <Button  size="lg" fullWidth={true} className="bg-mypink">
-          View all specialists
-        </Button>
-      </CardFooter>
-    </Card>
-          </li>
-        ))}
       </ul>
     </div>
   );
@@ -111,5 +119,7 @@ const Categories = () => {
 
 export default Categories;
 
-{/* <h2 className="text-xl font-semibold">{service.category}</h2>
-<p>{service.description}</p> */}
+{
+  /* <h2 className="text-xl font-semibold">{service.category}</h2>
+<p>{service.description}</p> */
+}

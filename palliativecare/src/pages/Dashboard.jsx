@@ -6,7 +6,10 @@ import DialogImage from "../components/dialogviewimage";
 import { ButtonGroup, Button } from "@material-tailwind/react";
 import Catergories from "../components/categories";
 // import { useHistory } from 'react-router-dom';
+import jasondataa from "../service/categoriesdata";
 const Dashboard = () => {
+const lengg = [{},{},{}]
+
     // const history = useHistory();
     // const navigateToServices = () => {
     //     history.push('/services');
@@ -109,12 +112,14 @@ const Dashboard = () => {
         <span>
           <h2 className=" text-xl font-medium">Top CareTakers</h2>
         </span>{" "}
-        <a className="font-medium hover:underline hover:text-mypink"href="/">See all</a>
+        <a className="font-medium hover:underline hover:text-mypink"href="/caretakers">See all</a>
       </div>
 
-   <div className=" space-y-3 p-0">
-
-    <div className="flex p-2 w-full h-17  bg-white rounded-2xl shadow-2xl flex-col">
+   <div className=" space-y-3 p-0 mb-20">
+    
+   {lengg.map((service, index) => (
+          <div  key={index}  className="mb-4 mt-3">
+           <div className="flex p-2 w-full h-17  bg-white rounded-2xl shadow-2xl flex-col">
         {/* Profile Card */}
 <div className="flex">
 <div> <DialogImage></DialogImage> </div>
@@ -158,6 +163,9 @@ const Dashboard = () => {
       <Button className=" bg-secondaryButton">Call</Button>
     </ButtonGroup></div>
   </div>
+          </div>
+        ))}
+
 
    </div>
 

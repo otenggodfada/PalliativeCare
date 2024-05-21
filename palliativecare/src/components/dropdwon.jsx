@@ -1,5 +1,5 @@
 /** @format */
-
+import {handleSignOut} from "../service/databasefirebase"
 import React, { useState, useEffect } from "react";
 const Dropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,13 +70,13 @@ function changedropiconcolor() {
             Login
           </a>
     
-          <a
-            href="/register"
+          <div
+            onClick={handleSignOut}
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-secondaryButton hover:text-white"
             role="menuitem"
           >
-            Signup
-          </a>
+            SignOut
+          </div>
      
         </div>
       </div>

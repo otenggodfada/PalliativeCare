@@ -22,6 +22,7 @@ module.exports = withMT({
         positiveNotification: '#508AA0',
         warmAccent: '#F5DEB3',
         mypink:'#ff145b',
+        mygreen:'#31F120',
         
       },
     },

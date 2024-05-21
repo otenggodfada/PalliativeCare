@@ -21,8 +21,8 @@ const ImageDialogo = () => {
    
     return (
       <>
-        <Card
-          className="w-28 h-24 cursor-pointer overflow-hidden transition-opacity hover:opacity-90"
+        <div
+          className="w-28 h-24 cursor-pointer overflow-hidden transition-opacity hover:opacity-90 rounded-lg"
           onClick={handleOpen}
         >
           <img
@@ -30,7 +30,7 @@ const ImageDialogo = () => {
             className="h-full w-full object-cover object-center"
             src={img1}
           />
-        </Card>
+        </div>
          <Dialog size="xl" open={open} handler={handleOpen}>
           <DialogHeader className="justify-between">
             <div className="flex items-center gap-3">

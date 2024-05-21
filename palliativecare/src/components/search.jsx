@@ -34,7 +34,7 @@ const ChatBot = () => {
   return (
     // Searchcontainer
     <>
-    <div className="pt-5">
+    <div className="pt-5 flex">
         {/* Search box */}
       <div className="w-full h-12 pl-3.5  rounded-3xl border border-mypink justify-between items-center flex ">
         {/* Search icon */}
@@ -50,7 +50,7 @@ const ChatBot = () => {
             fill="#FF2B70"
           />
         </svg>
-        <div className="relative flex w-full max-w-[24rem]">
+        <div className=" flex w-full max-w-[24rem]">
         <input type="search" className=" p-1 border-none bg-transparent focus:border-transparent focus:outline-none" name="" id="" placeholder="Ask AI about symptoms" />
 
     </div>

@@ -1,22 +1,43 @@
+
+import {handlelogin} from "../service/databasefirebase"
+import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Alert } from "@material-tailwind/react";
+import { Spinner } from "@material-tailwind/react";
 const Login = () => {
-    return (  <div className="bg-primaryBackground text-primaryText flex items-center flex-col justify-start min-h-screen p-4">
+
+  const [mess, setMess]= useState(false)
+  const [spin, setSpin]= useState(true)
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [color, setColor] = useState("");
+    const navigate = useNavigate();
+    const [getfeed, setfeed]= useState('')
+
+    return (    <div className="bg-primaryBackground text-primaryText flex items-center flex-col justify-start min-h-screen p-4">
     <div
       className="pb-5 flex flex-row  justify-between w-full text-accent hover:text-primaryText cursor-pointer"
     
     >
-    <a href="home">Home</a>
+   
     </div>
     <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
       <h2 className="text-2xl font-semibold text-center mb-6 text-mypink">
-        Sign In
+        Sign Up
       </h2>
-      <form className="space-y-4">
+      <form onSubmit={(e) => {setSpin(false)
+      e.preventDefault();
+   
+      handlelogin(email, password, navigate, setfeed, setColor).then(()=>{setMess(true)  ,setSpin(true),setEmail(''), setPassword('')},  );
+    
+    }}className="space-y-4">
      
         <div>
-          <label htmlFor="email" className="block text-secondaryText">
+          <label   htmlFor="email" className="block text-secondaryText">
             Email
           </label>
-          <input
+          <input  onChange={(e)=>{setEmail(e.target.value)}}
+          value={email}
             type="email"
             id="email"
             name="email"
@@ -25,27 +46,41 @@ const Login = () => {
             required
           ></input>
         </div>
-   
         <div>
-          <label htmlFor="password" className="block text-secondaryText">
+          <label  htmlFor="password" className="block text-secondaryText">
             Password
           </label>
           <input
+          value={password}
+       onChange={(e)=>{setPassword(e.target.value)}}
             type="password"
             id="password"
             name="password"
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primaryButton"
-            placeholder="Password"
+            placeholder="Your password"
             required
           ></input>
         </div>
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-mypink text-white font-semibold rounded-lg shadow-md hover:bg-primaryButton/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primaryButton"
+     
+        <button type="submit"
+  
+          className=" flex justify-center w-full p-3 bg-mypink text-white font-semibold rounded-lg shadow-md hover:bg-primaryButton/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primaryButton"
         >
-          Sign In
+          {spin? ('Sign In'):<Spinner /> }
         </button>
       </form>
+      {mess? (
+     
+        <Alert
+  
+       className={`mt-3 rounded-none border-l-4 border-${color}   bg-white font-medium text-${color}`}
+     >
+ {getfeed}
+     </Alert>
+    
+    ):( <div >
+       
+      </div>)}
       <p className="mt-6 text-center text-secondaryText">
         Don't have account?{" "}
         <a href="/register" className="text-mypink hover:underline">

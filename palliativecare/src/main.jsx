@@ -12,6 +12,7 @@ import Profile from './pages/Profile.jsx';
 import App from './pages/App.jsx';
 import SplashScreen from './pages/Splashscreen.jsx';
 import Catergories from './components/categories.jsx';
+import Caretakers from './components/caretakers.jsx';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
  <BrowserRouter>
@@ -24,7 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 <Route path='/dashboard' element={<Dashboard/>}/>
 <Route path='/profile' element={<Profile/>}/>
 <Route path='/categories' element={<Catergories/>}/>
-
+<Route path='/caretakers' element={<Caretakers/>}/>
 
  </Routes>
  </BrowserRouter>
