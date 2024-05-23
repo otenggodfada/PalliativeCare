@@ -1,4 +1,6 @@
 import React from "react";
+import { auth, } from "../service/firebaseservice";
+import { createBrowserHistory } from 'history';
 import {
   Drawer,
   Button,
@@ -15,7 +17,24 @@ const DrawerWithNavigation = () => {
     const [open, setOpen] = React.useState(false);
     const openDrawer = () => setOpen(true);
     const closeDrawer = () => setOpen(false);
-   
+   const [emaill, setEmailll]= React.useState('yes')
+
+  
+    
+   React.useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+        if (user) {
+            setEmailll(user.email);
+        } else {
+            setEmailll(null);
+        }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+}, []);
+  
+  
     return (
       <React.Fragment>
     <div onClick={openDrawer}>    <svg
@@ -145,7 +164,7 @@ const DrawerWithNavigation = () => {
             </ListItem>
           </List>
           <Button className="mt-3 ml-5" size="sm">
-            Documentation
+            {emaill}
           </Button>
         </Drawer>
       </React.Fragment>

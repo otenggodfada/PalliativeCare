@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, doc, setDoc, onSnapshot} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 
@@ -19,7 +19,8 @@ import { getAuth } from "firebase/auth";
       
       // Initialize Firebase Auth
       const auth = getAuth(app);
-    
+ 
+
 
  
-export { app, db, auth };
+export { app, db, auth , doc, setDoc, onSnapshot};

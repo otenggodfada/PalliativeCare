@@ -2,6 +2,7 @@
 import img2 from "../assets/images/im2.png";
 import { useState } from "react";
 import jasondataa from "../service/categoriesdata";
+import history from "../service/history";
 import {
   Card,
   CardHeader,
@@ -28,8 +29,8 @@ const Categories = () => {
   return (
     <div className=" ">
       <header className="bg-accent text-white p-4 fixed top-0 w-screen">
-        <div className="flex items-center">
-          <a href="/home">
+        <div onClick={  history.push('/home')} className="flex items-center">
+          <a href="">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"

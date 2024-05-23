@@ -5,7 +5,7 @@ import Search from "../components/search";
 import DialogImage from "../components/dialogviewimage";
 import { ButtonGroup, Button } from "@material-tailwind/react";
 import Catergories from "../components/categories";
-// import { useHistory } from 'react-router-dom';
+ import { Link } from 'react-router-dom';
 import jasondataa from "../service/categoriesdata";
 const Dashboard = () => {
 const lengg = [{},{},{}]
@@ -34,8 +34,8 @@ const lengg = [{},{},{}]
             <h2 className=" text-xl font-medium  hover:underline">Categories</h2>
           </span>{" "}
        
-          <a className="font-medium hover:underline hover:text-mypink"href="/categories">See all</a>
-     
+
+          <Link to='/categories' className="font-medium hover:underline hover:text-mypink">See all</Link>
         </div>
         {/* Categories container */}
         <div className=" inline-block space-x-3 w-full no-scrollbar overflow-x-auto whitespace-nowrap">
@@ -112,7 +112,7 @@ const lengg = [{},{},{}]
         <span>
           <h2 className=" text-xl font-medium">Top CareTakers</h2>
         </span>{" "}
-        <a className="font-medium hover:underline hover:text-mypink"href="/caretakers">See all</a>
+        <Link to='/caretakers' className="font-medium hover:underline hover:text-mypink">See all</Link>
       </div>
 
    <div className=" space-y-3 p-0 mb-20">

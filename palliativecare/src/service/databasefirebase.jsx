@@ -1,6 +1,7 @@
 /** @format */
 
-import { auth, db } from "../service/firebaseservice";
+import { auth, db , setDoc, doc , onSnapshot} from "../service/firebaseservice";
+
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -10,20 +11,29 @@ import {
 
 // Handle signup
 
-const handleSignUp = async (email, password, navii, errr, setcolor) => {
+const handleSignUp = async (email, password, navii, errr, setcolor, username, age, profileurl, telephone) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
+    await setDoc(doc(db, "users", "alovelace"), {
+   username : username,
+   age: age, 
+   profileurl: profileurl,
+   telephone: telephone
+   
+    
+    });
+    errr("User signed up successfully!");
     console.log("User signed up:", userCredential.user);
     setcolor("mygreen");
     setTimeout(() => {
       navii("/");
     }, 3000);
 
-    errr("User signed up successfully!");
+  
   } catch (error) {
     console.error("Error signing up:", error);
 
@@ -33,10 +43,11 @@ const handleSignUp = async (email, password, navii, errr, setcolor) => {
 };
 
 // Handle Sign Out
-const handleSignOut = async () => {
+const handleSignOut = async (navii) => {
   try {
     await signOut(auth);
-    alert("signout successfully");
+  navii('/login')
+    // alert("signout successfully");
   } catch (error) {
     alert("couldnt");
   }
@@ -55,5 +66,28 @@ const handlelogin = async (email, password, navii, errr, setcolor) => {
     setcolor("mypink");
   }
 };
+// Write User info to db
+const handleUserinfo =async ()=>{
+  try {
+     await setDoc(doc(db, "users", "alovelace"), {
+      firstname: "Ada",
+      lastname: "Lovelace",
+    });
+  } catch (error) {
+    
+  }
+}
+// Read or listen to user info from db
+const readUserinfo =async ()=>{
+  try {
+    onSnapshot(doc(db, "users", "alovelace"), (docSnapshot) => {
+      console.log("Latest data: ", docSnapshot.data());
+      // ...
+    });
+  } catch (error) {
+    
+  }
+}
 
-export { handleSignUp, handleSignOut, handlelogin };
+
+export { handleSignUp, handleSignOut, handlelogin , handleUserinfo, readUserinfo};

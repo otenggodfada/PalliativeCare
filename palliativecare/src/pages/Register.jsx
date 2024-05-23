@@ -1,5 +1,5 @@
 /** @format */
-import {handleSignUp} from "../service/databasefirebase"
+import {handleSignUp, handleUserinfo} from "../service/databasefirebase"
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from "react";
 import { Alert } from "@material-tailwind/react";
@@ -9,9 +9,25 @@ const [mess, setMess]= useState(false)
 const [spin, setSpin]= useState(true)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [age, setAge] = useState("");
+  const [profileurl, setProfileurl] = useState(null);
   const [color, setColor] = useState("");
   const navigate = useNavigate();
   const [getfeed, setfeed]= useState('')
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProfileurl(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <>
     
@@ -30,9 +46,10 @@ const [spin, setSpin]= useState(true)
         <form onSubmit={(e) => {setSpin(false)
         e.preventDefault();
      
-        handleSignUp(email, password, navigate, setfeed, setColor).then(()=>{setMess(true)  ,setSpin(true),setEmail(''), setPassword('')},  );
+        handleSignUp(email, password, navigate, setfeed, setColor, username, age, profileurl).then(()=>{setMess(true)  ,setSpin(true),setEmail(''), setPassword('')},  );
       
       }}className="space-y-4">
+        {/* Name */}
           <div>
             <label htmlFor="name" className="block text-secondaryText">
               Name
@@ -47,6 +64,7 @@ const [spin, setSpin]= useState(true)
               required
             ></input>
           </div>
+          {/* Email */}
           <div>
             <label   htmlFor="email" className="block text-secondaryText">
               Email
@@ -61,6 +79,40 @@ const [spin, setSpin]= useState(true)
               required
             ></input>
           </div>
+          {/* Age */}
+          <div>
+            <label   htmlFor="email" className="block text-secondaryText">
+              Age
+            </label>
+            <input  onChange={(e)=>{setAge(e.target.value)}}
+            value={age}
+              type="number"
+              id="age"
+              name="age"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primaryButton"
+              placeholder="Your age"
+              required
+            ></input>
+          </div>
+          {/* Image picker */}
+          <div>
+            <label   htmlFor="filepicker" className="block text-secondaryText">
+              Profile Picture
+            </label>
+            <input  
+            
+            // onChange={(e)=>{setEmail(e.target.value)}}
+            // value={email}
+        type="file" accept="image/*" onChange={handleImageChange}
+              name="email"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primaryButton "
+              placeholder="Select profile picture"
+              required
+            ></input>
+         
+          </div>
+          {profileurl &&(  <div className="w-full, flex justify-center p-2 m-0"> <img id="selectedImage" src={profileurl} alt="Selected Image" className=" w-[100px] h-[100px] object-cover"></img></div>)}
+          {/* Password */}
           <div>
             <label  htmlFor="password" className="block text-secondaryText">
               Password
@@ -76,6 +128,7 @@ const [spin, setSpin]= useState(true)
               required
             ></input>
           </div>
+          {/* Comfirm Password */}
           <div>
             <label htmlFor="confirm-password" className="block text-secondaryText">
               Confirm Password
