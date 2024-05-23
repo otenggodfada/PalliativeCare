@@ -11,6 +11,8 @@ const [spin, setSpin]= useState(true)
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [age, setAge] = useState("");
+  const [role, setrole] = useState('');
+  const [phone, setPhone] = useState("");
   const [profileurl, setProfileurl] = useState(null);
   const [color, setColor] = useState("");
   const navigate = useNavigate();
@@ -46,7 +48,7 @@ const [spin, setSpin]= useState(true)
         <form onSubmit={(e) => {setSpin(false)
         e.preventDefault();
      
-        handleSignUp(email, password, navigate, setfeed, setColor, username, age, profileurl).then(()=>{setMess(true)  ,setSpin(true),setEmail(''), setPassword('')},  );
+        handleSignUp(email, password, navigate, setfeed, setColor, username, age, profileurl,phone).then(()=>{setMess(true)  ,setSpin(true),setEmail(''), setPassword('')},  );
       
       }}className="space-y-4">
         {/* Name */}
@@ -55,7 +57,8 @@ const [spin, setSpin]= useState(true)
               Name
             </label>
             <input 
-           
+          onChange={(e)=>{setUsername(e.target.value)}}
+           value={username} 
               type="text"
               id="name"
               name="name"
@@ -79,6 +82,21 @@ const [spin, setSpin]= useState(true)
               required
             ></input>
           </div>
+          {/* Phone number */}
+          <div>
+            <label   htmlFor="email" className="block text-secondaryText">
+              Phone
+            </label>
+            <input  onChange={(e)=>{setPhone(e.target.value)}}
+            value={phone}
+              type="tel"
+              id="phone"
+              name="phone"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primaryButton"
+            placeholder="123-456-7890"
+              required
+            ></input>
+          </div>
           {/* Age */}
           <div>
             <label   htmlFor="email" className="block text-secondaryText">
@@ -94,13 +112,32 @@ const [spin, setSpin]= useState(true)
               required
             ></input>
           </div>
+          {/* Role */}
+          <div>
+            <label   htmlFor="email" className="block text-secondaryText">
+              Register as: User/Palliative Care
+            </label>
+            <select Change={(e)=>{setAge(e.target.value)}}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primaryButton bg-transparent"
+            
+              id="role"
+              name="role"
+             
+              placeholder="Your age"
+              required >
+
+  <option value="User">User</option>
+            <option value="Palliative Care">Palliative Care</option>
+            </select>
+         
+          </div>
           {/* Image picker */}
           <div>
             <label   htmlFor="filepicker" className="block text-secondaryText">
               Profile Picture
             </label>
             <input  
-            
+         
             // onChange={(e)=>{setEmail(e.target.value)}}
             // value={email}
         type="file" accept="image/*" onChange={handleImageChange}

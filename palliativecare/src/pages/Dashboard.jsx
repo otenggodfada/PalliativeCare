@@ -1,14 +1,17 @@
 /** @format */
 import img1 from "../assets/images/im1.png"
 import React from 'react';
+import { useEffect, useState } from "react";
 import Search from "../components/search";
 import DialogImage from "../components/dialogviewimage";
 import { ButtonGroup, Button } from "@material-tailwind/react";
 import Catergories from "../components/categories";
  import { Link } from 'react-router-dom';
 import jasondataa from "../service/categoriesdata";
+import { readUserinfo } from "../service/databasefirebase";
 const Dashboard = () => {
 const lengg = [{},{},{}]
+const [outputss, setoutputss] = useState('');
 
     // const history = useHistory();
     // const navigateToServices = () => {
@@ -55,14 +58,15 @@ const lengg = [{},{},{}]
               />
             </svg>
 
-            <div className="text-center text-white text-base font-semibold font-['Inter']">
+            <div className="text-center text-white text-base font-semibold font-['Inter']"> 
               Dental
+
               <br />
               Specialist
             </div>
           </div>
           {/* Heart Specialist */}
-          <div className="w-32 h-48 pl-6 pr-7 pt-7 pb-6  bg-mypink rounded-3xl flex-col justify-end items-center gap-7 inline-flex hover:bg-blue-600 hover:text-rose-500">
+          <div  className="w-32 h-48 pl-6 pr-7 pt-7 pb-6  bg-mypink rounded-3xl flex-col justify-end items-center gap-7 inline-flex hover:bg-blue-600 hover:text-rose-500">
             <svg
               width="56"
               height="66"
@@ -129,6 +133,7 @@ const lengg = [{},{},{}]
            {" "}
            <div className="  text-black text-base font-semibold font-['Inter']">
              Dr. Wilson
+            
            </div>
            <div className=" text-black text-sm font-normal font-['Inter']">
              General Pulmonologist
