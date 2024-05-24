@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState } from "react";
 import { Alert } from "@material-tailwind/react";
 import { Spinner } from "@material-tailwind/react";
+import logo from '../assets/images/logo.png';
+import im2 from '../assets/images/man.png';
 const Login = () => {
 
   const [mess, setMess]= useState(false)
@@ -21,10 +23,26 @@ const Login = () => {
     >
    
     </div>
-    <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-      <h2 className="text-2xl font-semibold text-center mb-6 text-mypink">
-        Sign Up
-      </h2>
+    <div className="w-full max-w-md   rounded-lg shadow-md p-3 ">
+  
+  <div class=" m-2">
+<div class="flex">
+<div class="grow rounded-t-3xl  bg-white pt-6 px-6">
+<img className="w-[120px] rounded-b-[70px] relative" src={im2} alt="" />
+</div>
+<div class="bg-white rounded-tl-[1.6rem] rounded-tr-3xl">
+  
+  <div class="inner-header p-6  bg-primaryBackground rounded-bl-3xl rounded-tr-3xl">
+    <div class="flex items-center justify-center rounded-full bg-white p-4">
+     <img className="w-[50px] h-[50px] " src={logo} alt="" />
+    </div>
+  </div>
+</div>
+</div>
+<div class="rounded-br-3xl rounded-bl-3xl grow bg-white p-3">
+<p class="rounded-3xl bg-white p-4 font-semibold text-2xl text-primaryButton text-center ">Sign In</p>
+</div>
+</div>
       <form onSubmit={(e) => {setSpin(false)
       e.preventDefault();
    

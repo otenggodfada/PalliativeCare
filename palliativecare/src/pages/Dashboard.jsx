@@ -8,6 +8,14 @@ import { ButtonGroup, Button } from "@material-tailwind/react";
 import Catergories from "../components/categories";
  import { Link } from 'react-router-dom';
 import jasondataa from "../service/categoriesdata";
+import {
+  auth,
+  db,
+  setDoc,
+  doc,
+  onSnapshot,
+  storage,
+} from "../service/firebaseservice";
 import { readUserinfo } from "../service/databasefirebase";
 const Dashboard = () => {
 const lengg = [{},{},{}]
@@ -16,7 +24,10 @@ const [outputss, setoutputss] = useState('');
     // const history = useHistory();
     // const navigateToServices = () => {
     //     history.push('/services');
+
+ 
     //   };
+
   return (
     <section className="bg-offWhite pt-4 rounded mt-10 ">
       <div>

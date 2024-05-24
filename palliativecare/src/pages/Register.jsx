@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState } from "react";
 import { Alert } from "@material-tailwind/react";
 import { Spinner } from "@material-tailwind/react";
+import logo from '../assets/images/logo.png';
+import im2 from '../assets/images/im2.png';
 const Register = () => {
 const [mess, setMess]= useState(false)
 const [spin, setSpin]= useState(true)
@@ -29,7 +31,9 @@ const [spin, setSpin]= useState(true)
       reader.readAsDataURL(file);
     }
   };
-
+const handleSelections=(e)=>{
+  setrole(e.target.value);
+}
   return (
     <>
     
@@ -41,14 +45,32 @@ const [spin, setSpin]= useState(true)
       >
      
       </div>
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-semibold text-center mb-6 text-mypink">
-          Sign Up
-        </h2>
+      <div className="w-full max-w-md   rounded-lg shadow-md p-3 ">
+  
+      <div class=" m-2">
+  <div class="flex">
+    <div class="grow rounded-t-3xl  bg-white pt-6 px-6">
+ <img className="w-[100px] rounded-b-[70px] relative" src={im2} alt="" />
+    </div>
+    <div class="bg-white rounded-tl-[1.6rem] rounded-tr-3xl  ">
+      
+      <div class="inner-header p-6  bg-primaryBackground rounded-bl-3xl rounded-tr-3xl">
+        <div class="flex items-center justify-center rounded-full bg-white p-4">
+         <img className="w-[50px] h-[50px] " src={logo} alt=""  />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="rounded-br-3xl rounded-bl-3xl grow bg-white p-3">
+    <p class="rounded-3xl bg-white p-4 font-semibold text-2xl text-primaryButton text-center ">Sign Up</p>
+  </div>
+</div>
+ 
+       
         <form onSubmit={(e) => {setSpin(false)
         e.preventDefault();
      
-        handleSignUp(email, password, navigate, setfeed, setColor, username, age, profileurl,phone).then(()=>{setMess(true)  ,setSpin(true),setEmail(''), setPassword('')},  );
+        handleSignUp(email, password, navigate, setfeed, setColor, username, age, profileurl,phone, role).then(()=>{setMess(true)  ,setSpin(true),setEmail(''), setPassword('')},  );
       
       }}className="space-y-4">
         {/* Name */}
@@ -99,7 +121,7 @@ const [spin, setSpin]= useState(true)
           </div>
           {/* Age */}
           <div>
-            <label   htmlFor="email" className="block text-secondaryText">
+            <label   htmlFor="age" className="block text-secondaryText">
               Age
             </label>
             <input  onChange={(e)=>{setAge(e.target.value)}}
@@ -114,22 +136,19 @@ const [spin, setSpin]= useState(true)
           </div>
           {/* Role */}
           <div>
-            <label   htmlFor="email" className="block text-secondaryText">
+            <label   htmlFor="role" className="block text-secondaryText">
               Register as: User/Palliative Care
             </label>
-            <select Change={(e)=>{setAge(e.target.value)}}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primaryButton bg-transparent"
+            <select onChange={handleSelections}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primaryButton bg-white"
             
-              id="role"
-              name="role"
-             
-              placeholder="Your age"
+           
               required >
-
+ <option value="">--Select role--</option>
   <option value="User">User</option>
             <option value="Palliative Care">Palliative Care</option>
             </select>
-         
+            {role && <p>You selected: {role}</p>}
           </div>
           {/* Image picker */}
           <div>

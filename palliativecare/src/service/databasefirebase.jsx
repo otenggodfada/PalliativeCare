@@ -45,6 +45,17 @@ const generateRandomName = () => {
 };
 // Handle signup
 
+// calcute timestamp
+let time = {
+  seconds: 1613748319,
+  nanoseconds: 47688698687,
+}
+
+const fireBaseTime = new Date(
+  time.seconds * 1000 + time.nanoseconds / 1000000,
+);
+const date = fireBaseTime.toDateString();
+const atTime = fireBaseTime.toLocaleTimeString();
 const handleSignUp = async (
   email,
   password,
@@ -70,7 +81,7 @@ const handleSignUp = async (
       age: age,
       profilpc: getprofilelink,
       telephone: telephone,
-      dcreated: Timestamp.now,
+      dcreated: atTime,
       role: role
     });
     errr("User signed up successfully!");
@@ -123,7 +134,7 @@ const handleUserinfo = async () => {
 // Read or listen to user info from db
 const readUserinfo = (outputCallback) => {
   try {
-    const unsubscribe = onSnapshot(doc(db, "users", "userinfos"), (docSnapshot) => {
+    const unsubscribe = onSnapshot(doc(db, "users", auth.currentUser.uid), (docSnapshot) => {
       if (docSnapshot.exists()) {
         console.log("Latest data: ", docSnapshot.data());
         const data = docSnapshot.data();
