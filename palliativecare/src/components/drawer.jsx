@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import { auth, } from "../service/firebaseservice";
 import { createBrowserHistory } from 'history';
 import {
@@ -17,7 +18,8 @@ const DrawerWithNavigation = () => {
     const [open, setOpen] = React.useState(false);
     const openDrawer = () => setOpen(true);
     const closeDrawer = () => setOpen(false);
-   const [emaill, setEmailll]= React.useState('yes')
+   const [emaill, setEmailll]= React.useState('yes');
+   const [username, setUsername] = React.useState('');
 
   
     
@@ -25,8 +27,10 @@ const DrawerWithNavigation = () => {
     const unsubscribe = auth.onAuthStateChanged(user => {
         if (user) {
             setEmailll(user.email);
+
         } else {
             setEmailll(null);
+            
         }
     });
 
@@ -163,9 +167,11 @@ const DrawerWithNavigation = () => {
               Tables
             </ListItem>
           </List>
+         
           <Button className="mt-3 ml-5" size="sm">
-            {emaill}
+          {username}
           </Button>
+         
         </Drawer>
       </React.Fragment>
     );

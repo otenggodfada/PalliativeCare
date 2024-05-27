@@ -16,10 +16,10 @@ import {
   onSnapshot,
   storage,
 } from "../service/firebaseservice";
-import { readUserinfo } from "../service/databasefirebase";
+
 const Dashboard = () => {
 const lengg = [{},{},{}]
-const [outputss, setoutputss] = useState('');
+
 
     // const history = useHistory();
     // const navigateToServices = () => {

@@ -9,6 +9,7 @@ import {
   storage,
 } from "../service/firebaseservice";
 import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
+import { data } from "autoprefixer";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -132,32 +133,31 @@ const handleUserinfo = async () => {
   } catch (error) {}
 };
 // Read or listen to user info from db
-const readUserinfo = (outputCallback) => {
+const readUserinfo = () => {
+ 
   try {
+    
     const unsubscribe = onSnapshot(doc(db, "users", auth.currentUser.uid), (docSnapshot) => {
       if (docSnapshot.exists()) {
-        console.log("Latest data: ", docSnapshot.data());
-        const data = docSnapshot.data();
-        if (outputCallback) {
-          outputCallback(data);
-        }
+        // console.log("Latest data: ", docSnapshot.data());
+        // const data1= docSnapshot.data();
+   
+    
       } else {
         console.log("No such document!");
-      }
-    });
+      } 
+    }); 
     
     // Optional: Return the unsubscribe function if you want to stop listening later
     return unsubscribe;
   } catch (error) {
     console.error("Error reading user info: ", error);
   }
+  return dataa
 };
 
-// Usage example:
-readUserinfo((data) => {
-  // Do something with the data
-  console.log("Received data: ", data);
-});
+
+
 
 
 export {
@@ -165,5 +165,5 @@ export {
   handleSignOut,
   handlelogin,
   handleUserinfo,
-  readUserinfo,
+  
 };
