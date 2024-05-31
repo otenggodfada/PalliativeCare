@@ -16,18 +16,20 @@ const [spin, setSpin]= useState(true)
   const [role, setrole] = useState('');
   const [phone, setPhone] = useState("");
   const [profileurl, setProfileurl] = useState(null);
+  const [profs, setprofs] = useState(null);
   const [color, setColor] = useState("");
   const navigate = useNavigate();
   const [getfeed, setfeed]= useState('')
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
 
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setProfileurl(e.target.result);
+       setprofs(e)
       };
+      setProfileurl(file);
       reader.readAsDataURL(file);
     }
   };
@@ -167,7 +169,7 @@ const handleSelections=(e)=>{
             ></input>
          
           </div>
-          {profileurl &&(  <div className="w-full, flex justify-center p-2 m-0"> <img id="selectedImage" src={profileurl} alt="Selected Image" className=" w-[100px] h-[100px] object-cover"></img></div>)}
+          {profs &&(  <div className="w-full, flex justify-center p-2 m-0"> <img id="selectedImage" src={profs} alt="Selected Image" className=" w-[100px] h-[100px] object-cover"></img></div>)}
           {/* Password */}
           <div>
             <label  htmlFor="password" className="block text-secondaryText">

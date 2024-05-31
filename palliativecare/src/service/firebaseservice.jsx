@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc, onSnapshot} from "firebase/firestore";
+import { getFirestore, doc, setDoc, onSnapshot, collection, getDocs} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from 'firebase/storage';
 
@@ -23,4 +23,4 @@ import { getStorage } from 'firebase/storage';
 
 
  
-export { app, db, auth , doc, setDoc, onSnapshot, storage};
+export { app, db, auth , doc, setDoc, onSnapshot, storage, collection, getDocs};

@@ -4,6 +4,8 @@ import {
   auth,
   db,
   setDoc,
+  getDocs,
+  collection,
   doc,
   onSnapshot,
   storage,
@@ -20,10 +22,14 @@ import { Timestamp } from "firebase/firestore";
 
 // Function to upload profile image to Firebase Storage
 const uploadProfileImage = async (profileUrl) => {
+ 
   const storageRef = ref(storage, "profile_images/" + generateRandomName());
   try {
+    const metadata = {
+      contentType: 'image/jpeg'
+    };
     // Upload file to Firebase Storage
-    await uploadBytes(storageRef, profileUrl);
+    await uploadBytes(storageRef, profileUrl, metadata);
     const downloadURL = await getDownloadURL(storageRef);
 
     //return the download link
@@ -167,11 +173,36 @@ userdetails(locall)
 
 
 
+//Read or listen to public users
+
+const getAllDocuments = async () => {
+  try {
+    // Fetch all documents in the "users" collection
+    const querySnapshot = await getDocs(collection(db, "users"));
+    
+    // Extract the data from each document
+    const documents = querySnapshot.docs.map(doc => doc.data());
+    
+    // Log each username to the console
+    documents.forEach(doc => {
+      console.log(doc.username);
+    });
+    
+    // Return the array of document data
+    return documents;
+  } catch (error) {
+    console.error("Error getting documents: ", error);
+  }
+};
+
+getAllDocuments();
+
+
 export {
   handleSignUp,
   handleSignOut,
   handlelogin,
   handleUserinfo,
-  readUserinfo
-  
+  readUserinfo,
+  getAllDocuments
 };

@@ -8,6 +8,7 @@ import { ButtonGroup, Button } from "@material-tailwind/react";
 import Catergories from "../components/categories";
  import { Link } from 'react-router-dom';
 import jasondataa from "../service/categoriesdata";
+import { getAllDocuments } from "../service/databasefirebase";
 import {
   auth,
   db,
@@ -20,7 +21,22 @@ import {
 const Dashboard = () => {
 const lengg = [{},{},{}]
 
+const [users, setUsers] = useState([]); // State to hold the fetched users
 
+useEffect(() => {
+  // Function to fetch documents and update state
+  const fetchDocuments = async () => {
+    try {
+      const documents = await getAllDocuments(); // Call the function to fetch documents
+      setUsers(documents); // Update state with the fetched documents
+    } catch (error) {
+      console.error("Error fetching documents: ", error);
+    }
+  };
+
+  fetchDocuments(); // Call the function when component mounts
+}, []);
+const filteredUsers = users.filter(user => user.role.includes("Palliative Care"));
     // const history = useHistory();
     // const navigateToServices = () => {
     //     history.push('/services');
@@ -132,22 +148,22 @@ const lengg = [{},{},{}]
 
    <div className=" space-y-3 p-0 mb-20">
     
-   {lengg.map((service, index) => (
+   {filteredUsers.map((user, index) => (
           <div  key={index}  className="mb-4 mt-3">
            <div className="flex p-2 w-full h-17  bg-white rounded-2xl shadow-2xl flex-col">
         {/* Profile Card */}
 <div className="flex">
-<div> <DialogImage></DialogImage> </div>
+<div> <DialogImage  img={user.profilpc} /> </div>
      
      <div className="p-2  flex-col flex justify-center  space-y-1 ">
    
            {" "}
            <div className="  text-black text-base font-semibold font-['Inter']">
-             Dr. Wilson
+           {user.username}
             
            </div>
            <div className=" text-black text-sm font-normal font-['Inter']">
-             General Pulmonologist
+        {user.role}
            </div>
      
          <div className="flex">

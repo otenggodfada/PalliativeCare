@@ -2,11 +2,28 @@ import jasondataa from "../service/categoriesdata";
 import img2 from "../assets/images/im2.png";
 import DialogImage from "../components/dialogviewimage";
 import { ButtonGroup, Button } from "@material-tailwind/react";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { getAllDocuments } from "../service/databasefirebase";
 const Caretakers = () => {
     const dataa = jasondataa();
     const [searchQuery, setSearchQuery] = useState("");
+    const [users, setUsers] = useState([]); // State to hold the fetched users
+
+    useEffect(() => {
+      // Function to fetch documents and update state
+      const fetchDocuments = async () => {
+        try {
+          const documents = await getAllDocuments(); // Call the function to fetch documents
+          setUsers(documents); // Update state with the fetched documents
+        } catch (error) {
+          console.error("Error fetching documents: ", error);
+        }
+      };
+    
+      fetchDocuments(); // Call the function when component mounts
+    }, []);
+    const filteredUsers = users.filter(user => user.username.toLowerCase().includes(searchQuery.toLowerCase()));
+const finaluser = filteredUsers.filter(user => user.role.includes("Palliative Care"));
 
     const handleSearchChange = (e) => {
       setSearchQuery(e.target.value);
@@ -66,21 +83,22 @@ const Caretakers = () => {
           </div>
   
           <div>
-            {dataa.map((service, index) => (
+            {finaluser.map((service, index) => (
               <li key={index} className="mb-4 mt-3 ">
                     <div className="flex p-2 w-full h-17  bg-white rounded-2xl shadow-2xl flex-col">
         {/* Profile Card */}
 <div className="flex">
-<div> <DialogImage></DialogImage> </div>
+<div> <DialogImage img = {service.profilpc
+}/> </div>
      
      <div className="p-2  flex-col flex justify-center  space-y-1 ">
    
            {" "}
            <div className="  text-black text-base font-semibold font-['Inter']">
-             Dr. Wilson
+           {service.username}
            </div>
            <div className=" text-black text-sm font-normal font-['Inter']">
-             General Pulmonologist
+         {service.role}
            </div>
      
          <div className="flex">
