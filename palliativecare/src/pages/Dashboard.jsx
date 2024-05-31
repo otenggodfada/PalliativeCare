@@ -1,12 +1,12 @@
 /** @format */
-import img1 from "../assets/images/im1.png"
-import React from 'react';
+import img1 from "../assets/images/im1.png";
+import React from "react";
 import { useEffect, useState } from "react";
 import Search from "../components/search";
 import DialogImage from "../components/dialogviewimage";
 import { ButtonGroup, Button } from "@material-tailwind/react";
 import Catergories from "../components/categories";
- import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import jasondataa from "../service/categoriesdata";
 import { getAllDocuments } from "../service/databasefirebase";
 import {
@@ -19,30 +19,31 @@ import {
 } from "../service/firebaseservice";
 
 const Dashboard = () => {
-const lengg = [{},{},{}]
+  const lengg = [{}, {}, {}];
 
-const [users, setUsers] = useState([]); // State to hold the fetched users
+  const [users, setUsers] = useState([]); // State to hold the fetched users
 
-useEffect(() => {
-  // Function to fetch documents and update state
-  const fetchDocuments = async () => {
-    try {
-      const documents = await getAllDocuments(); // Call the function to fetch documents
-      setUsers(documents); // Update state with the fetched documents
-    } catch (error) {
-      console.error("Error fetching documents: ", error);
-    }
-  };
+  useEffect(() => {
+    // Function to fetch documents and update state
+    const fetchDocuments = async () => {
+      try {
+        const documents = await getAllDocuments(); // Call the function to fetch documents
+        setUsers(documents); // Update state with the fetched documents
+      } catch (error) {
+        console.error("Error fetching documents: ", error);
+      }
+    };
 
-  fetchDocuments(); // Call the function when component mounts
-}, []);
-const filteredUsers = users.filter(user => user.role.includes("Palliative Care"));
-    // const history = useHistory();
-    // const navigateToServices = () => {
-    //     history.push('/services');
+    fetchDocuments(); // Call the function when component mounts
+  }, []);
+  const filteredUsers = users.filter((user) =>
+    user.role.includes("Palliative Care")
+  );
+  // const history = useHistory();
+  // const navigateToServices = () => {
+  //     history.push('/services');
 
- 
-    //   };
+  //   };
 
   return (
     <section className="bg-offWhite pt-4 rounded mt-10 ">
@@ -56,16 +57,21 @@ const filteredUsers = users.filter(user => user.role.includes("Palliative Care")
           cares
         </span>
       </div>
-<Search></Search>
+      <Search></Search>
       <div>
         {/* Categories */}
         <div className="flex justify-between pt-5 pb-5">
           <span>
-            <h2 className=" text-xl font-medium  hover:underline">Categories</h2>
+            <h2 className=" text-xl font-medium  hover:underline">
+              Categories
+            </h2>
           </span>{" "}
-       
-
-          <Link to='/categories' className="font-medium hover:underline hover:text-mypink">See all</Link>
+          <Link
+            to="/categories"
+            className="font-medium hover:underline hover:text-mypink"
+          >
+            See all
+          </Link>
         </div>
         {/* Categories container */}
         <div className=" inline-block space-x-3 w-full no-scrollbar overflow-x-auto whitespace-nowrap">
@@ -85,15 +91,14 @@ const filteredUsers = users.filter(user => user.role.includes("Palliative Care")
               />
             </svg>
 
-            <div className="text-center text-white text-base font-semibold font-['Inter']"> 
+            <div className="text-center text-white text-base font-semibold font-['Inter']">
               Dental
-
               <br />
               Specialist
             </div>
           </div>
           {/* Heart Specialist */}
-          <div  className="w-32 h-48 pl-6 pr-7 pt-7 pb-6  bg-mypink rounded-3xl flex-col justify-end items-center gap-7 inline-flex hover:bg-blue-600 hover:text-rose-500">
+          <div className="w-32 h-48 pl-6 pr-7 pt-7 pb-6  bg-mypink rounded-3xl flex-col justify-end items-center gap-7 inline-flex hover:bg-blue-600 hover:text-rose-500">
             <svg
               width="56"
               height="66"
@@ -143,64 +148,75 @@ const filteredUsers = users.filter(user => user.role.includes("Palliative Care")
         <span>
           <h2 className=" text-xl font-medium">Top CareTakers</h2>
         </span>{" "}
-        <Link to='/caretakers' className="font-medium hover:underline hover:text-mypink">See all</Link>
+        <Link
+          to="/caretakers"
+          className="font-medium hover:underline hover:text-mypink"
+        >
+          See all
+        </Link>
       </div>
 
-   <div className=" space-y-3 p-0 mb-20">
-    
-   {filteredUsers.map((user, index) => (
-          <div  key={index}  className="mb-4 mt-3">
-           <div className="flex p-2 w-full h-17  bg-white rounded-2xl shadow-2xl flex-col">
-        {/* Profile Card */}
-<div className="flex">
-<div> <DialogImage  img={user.profilpc} /> </div>
-     
-     <div className="p-2  flex-col flex justify-center  space-y-1 ">
-   
-           {" "}
-           <div className="  text-black text-base font-semibold font-['Inter']">
-           {user.username}
-            
-           </div>
-           <div className=" text-black text-sm font-normal font-['Inter']">
-        {user.role}
-           </div>
-     
-         <div className="flex">
-           {" "}
-           <svg
-             width="14"
-             height="14"
-             viewBox="0 0 14 14"
-             fill="none"
-             xmlns="http://www.w3.org/2000/svg"
-           >
-             <path
-               d="M7 0C8.85652 0 10.637 0.737498 11.9497 2.05025C13.2625 3.36301 14 5.14348 14 7C14 8.85652 13.2625 10.637 11.9497 11.9497C10.637 13.2625 8.85652 14 7 14C5.14348 14 3.36301 13.2625 2.05025 11.9497C0.737498 10.637 0 8.85652 0 7C0 5.14348 0.737498 3.36301 2.05025 2.05025C3.36301 0.737498 5.14348 0 7 0ZM6.34375 3.28125V7C6.34375 7.21875 6.45312 7.42383 6.63633 7.54688L9.26133 9.29688C9.56211 9.49922 9.96953 9.41719 10.1719 9.11367C10.3742 8.81016 10.2922 8.40547 9.98867 8.20312L7.65625 6.65V3.28125C7.65625 2.91758 7.36367 2.625 7 2.625C6.63633 2.625 6.34375 2.91758 6.34375 3.28125Z"
-               fill="black"
-             />
-           </svg>
-           <div className="  text-black text-xs font-semibold font-['Inter'] pl-1">
-             10:00 AM - 12:30 PM
-           </div>
-         </div>
-        
-   
-       </div>
-</div>
-       {/* Bottoms */}
-    <div className="pt-3"> <ButtonGroup fullWidth>
-      <Button className=" bg-mypink"><div>Message</div></Button>
-      <Button className="  bg-primaryButton">Profile</Button>
-      <Button className=" bg-secondaryButton">Call</Button>
-    </ButtonGroup></div>
-  </div>
+      <div className=" space-y-3 p-0 mb-20">
+        {filteredUsers.map((user, index) => (
+          <div key={index} className="mb-4 mt-3">
+            <div className="flex p-2 w-full h-17  bg-white rounded-2xl shadow-2xl flex-col">
+              {/* Profile Card */}
+              <div className="flex">
+                <div>
+                  {" "}
+                  <DialogImage img={user.profilpc} />{" "}
+                </div>
+
+                <div className="p-2  flex-col flex justify-center  space-y-1 ">
+                  {" "}
+                  <div className="  text-black text-base font-bold font-['Inter']">
+                    <h1> {user.username}</h1>
+                  </div>
+                  {user.specialists.map((e) => (
+                    <div className="  text-black text-[15px] font-semibold font-['Inter']">
+                      <h2>{e}</h2>
+                    </div>
+                  ))}
+                  {user.profession.map((e) => (
+                    <div className=" text-black text-sm  font-normal font-['Inter']">
+                      <h3> {e}</h3>
+                    </div>
+                  ))}
+                  <div className="flex">
+                    {" "}
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M7 0C8.85652 0 10.637 0.737498 11.9497 2.05025C13.2625 3.36301 14 5.14348 14 7C14 8.85652 13.2625 10.637 11.9497 11.9497C10.637 13.2625 8.85652 14 7 14C5.14348 14 3.36301 13.2625 2.05025 11.9497C0.737498 10.637 0 8.85652 0 7C0 5.14348 0.737498 3.36301 2.05025 2.05025C3.36301 0.737498 5.14348 0 7 0ZM6.34375 3.28125V7C6.34375 7.21875 6.45312 7.42383 6.63633 7.54688L9.26133 9.29688C9.56211 9.49922 9.96953 9.41719 10.1719 9.11367C10.3742 8.81016 10.2922 8.40547 9.98867 8.20312L7.65625 6.65V3.28125C7.65625 2.91758 7.36367 2.625 7 2.625C6.63633 2.625 6.34375 2.91758 6.34375 3.28125Z"
+                        fill="black"
+                      />
+                    </svg>
+                    <div className="  text-black text-xs font-semibold font-['Inter'] pl-1">
+                      10:00 AM - 12:30 PM
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* Bottoms */}
+              <div className="pt-3">
+                {" "}
+                <ButtonGroup fullWidth>
+                  <Button className=" bg-mypink">
+                    <div>Message</div>
+                  </Button>
+                  <Button className="  bg-primaryButton">Profile</Button>
+                  <Button className=" bg-secondaryButton">Call</Button>
+                </ButtonGroup>
+              </div>
+            </div>
           </div>
         ))}
-
-
-   </div>
-
+      </div>
     </section>
   );
 };

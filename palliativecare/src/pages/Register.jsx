@@ -15,6 +15,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [age, setAge] = useState("");
+  const [experience, setexpericence] = useState("");
   const [role, setrole] = useState("");
   const [specializations, setSpecializations] = useState([]);
   const [phone, setPhone] = useState("");
@@ -113,7 +114,7 @@ const Register = () => {
                 age,
                 profileurl,
                 phone,
-                role
+                role,selectedSpecializations, selectedSpecializations1, experience
               ).then(() => {
                 setMess(true), setSpin(true), setEmail(""), setPassword("");
               });
@@ -277,7 +278,24 @@ const Register = () => {
                 </div>
               </div>
             )}
-
+  {/* Experience */}
+  <div>
+              <label htmlFor="experience" className="block text-secondaryText">
+                Experience
+              </label>
+              <input
+                onChange={(e) => {
+                  setexpericence(e.target.value);
+                }}
+                value={experience}
+                type="number"
+                id="experience"
+                name="experience"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primaryButton"
+                placeholder="Your experience"
+                required
+              ></input>
+            </div>
             <div>
               <label htmlFor="filepicker" className="block text-secondaryText">
                 Profile Picture

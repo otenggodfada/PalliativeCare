@@ -75,6 +75,7 @@ const handleSignUp = async (
   telephone,
   role,
   profession, specialists,
+  experience
 
 ) => {
   try {
@@ -93,7 +94,8 @@ const handleSignUp = async (
       role: role,
       profession: profession,
       specialists: specialists,
-      email:email
+      email:email,
+      experience: experience
     });
     errr("User signed up successfully!");
     console.log("User signed up:", userCredential.user);
@@ -189,7 +191,9 @@ const getAllDocuments = async () => {
     
     // Log each username to the console
     documents.forEach(doc => {
-      console.log(doc.username);
+     doc.profession.map((e)=>{
+console.log(e)
+     })
     });
     
     // Return the array of document data
