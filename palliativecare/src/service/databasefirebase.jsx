@@ -133,14 +133,20 @@ const handleUserinfo = async () => {
   } catch (error) {}
 };
 // Read or listen to user info from db
-const readUserinfo = () => {
+const readUserinfo = (userdetails) => {
  
   try {
     
     const unsubscribe = onSnapshot(doc(db, "users", auth.currentUser.uid), (docSnapshot) => {
       if (docSnapshot.exists()) {
-        // console.log("Latest data: ", docSnapshot.data());
-        // const data1= docSnapshot.data();
+
+        var locall = []
+   locall = docSnapshot.data()
+   
+
+
+userdetails(locall)
+    
    
     
       } else {
@@ -150,10 +156,11 @@ const readUserinfo = () => {
     
     // Optional: Return the unsubscribe function if you want to stop listening later
     return unsubscribe;
+    
   } catch (error) {
     console.error("Error reading user info: ", error);
   }
-  return dataa
+
 };
 
 
@@ -165,5 +172,6 @@ export {
   handleSignOut,
   handlelogin,
   handleUserinfo,
+  readUserinfo
   
 };

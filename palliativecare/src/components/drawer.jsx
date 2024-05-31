@@ -13,23 +13,29 @@ import {
   ListItemSuffix,
   Chip,
 } from "@material-tailwind/react";
- 
+ import { readUserinfo } from "../service/databasefirebase";
 const DrawerWithNavigation = () => {
     const [open, setOpen] = React.useState(false);
     const openDrawer = () => setOpen(true);
     const closeDrawer = () => setOpen(false);
    const [emaill, setEmailll]= React.useState('yes');
    const [username, setUsername] = React.useState('');
-
+   const [userd, setUserd]= React.useState([]);
   
     
    React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
         if (user) {
             setEmailll(user.email);
+            readUserinfo(setUserd)
+        
+       console.log(userd['age'])
+
 
         } else {
             setEmailll(null);
+        
+            
             
         }
     });
@@ -169,7 +175,7 @@ const DrawerWithNavigation = () => {
           </List>
          
           <Button className="mt-3 ml-5" size="sm">
-          {username}
+          {userd['age']}
           </Button>
          
         </Drawer>

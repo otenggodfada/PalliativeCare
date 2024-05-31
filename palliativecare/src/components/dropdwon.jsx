@@ -1,26 +1,26 @@
 /** @format */
-import {handleSignOut} from "../service/databasefirebase"
+import { handleSignOut } from "../service/databasefirebase";
 import { Switch } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 const Dropdown = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-const [dropiconcolor, setDropiconcolor]= useState('#e8eaed')
+  const [dropiconcolor, setDropiconcolor] = useState("#e8eaed");
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
-function changedropiconcolor() {
-    setDropiconcolor("#561E5A")
-    
-}
+  function changedropiconcolor() {
+    setDropiconcolor("#561E5A");
+  }
   const handleClickOutside = (event) => {
     // Check if the click is outside the dropdown menu
     if (
       !event.target.closest("#dropdownMenu") &&
       !event.target.closest("#dropdownButton")
     ) {
-      setIsOpen(false);    setDropiconcolor("#e8eaed")
+      setIsOpen(false);
+      setDropiconcolor("#e8eaed");
     }
   };
 
@@ -38,12 +38,20 @@ function changedropiconcolor() {
     <div className="relative inline-block text-left">
       <div
         id="dropdownButton"
-        onClick={()=>{toggleDropdown(), changedropiconcolor()} }
+        onClick={() => {
+          toggleDropdown(), changedropiconcolor();
+        }}
         type="button"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        <div className=" w-[40px] h-[40px]  bg-primaryBackground rounded-full border-white  border flex object-contain "><img className="  object-fill rounded-full" src="https://www.shutterstock.com/image-photo/healthcare-medical-staff-concept-portrait-600nw-2281024823.jpg" alt="" /></div>
+        <div className=" w-[40px] h-[40px]  bg-primaryBackground rounded-full border-white  border flex object-contain ">
+          <img
+            className="  object-fill rounded-full"
+            src="https://www.shutterstock.com/image-photo/healthcare-medical-staff-concept-portrait-600nw-2281024823.jpg"
+            alt=""
+          />
+        </div>
       </div>
       <div
         id="dropdownMenu"
@@ -58,21 +66,31 @@ function changedropiconcolor() {
           aria-labelledby="dropdownButton"
         >
           <div
-      
             className="flex px-4 py-2 text-sm text-gray-700  "
             role="menuitem"
           >
-  <Switch color="green" defaultChecked /> <div className="p-3">Notification</div>
+            <Switch color="green" defaultChecked />{" "}
+            <div className="p-3">Notification</div>
           </div>
-    
+
           <div
-            onClick={()=>{handleSignOut(navigate)}}
+            onClick={() => {
+              handleSignOut(navigate);
+            }}
             className="flex px-4 py-2 text-sm text-gray-700 "
             role="menuitem"
           >
-           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff145b"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg> SignOut
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#ff145b"
+            >
+              <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+            </svg>{" "}
+            SignOut
           </div>
-     
         </div>
       </div>
     </div>
