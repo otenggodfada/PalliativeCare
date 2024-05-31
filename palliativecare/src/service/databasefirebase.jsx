@@ -73,7 +73,8 @@ const handleSignUp = async (
   age,
   profileurl,
   telephone,
-  role
+  role,
+  profession, specialists,
 
 ) => {
   try {
@@ -89,7 +90,10 @@ const handleSignUp = async (
       profilpc: getprofilelink,
       telephone: telephone,
       dcreated: atTime,
-      role: role
+      role: role,
+      profession: profession,
+      specialists: specialists,
+      email:email
     });
     errr("User signed up successfully!");
     console.log("User signed up:", userCredential.user);
