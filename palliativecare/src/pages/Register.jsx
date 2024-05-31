@@ -45,6 +45,9 @@ const handleSelections=(e)=>{
   setrole(e.target.value);
 }
 
+const handleSpecialization=(e)=>{
+
+}
 
 const handleSpecializationChange = (event) => {
   const options = event.target.options;
@@ -186,13 +189,13 @@ const handleSpecializationChange = (event) => {
            
               required >
  <option value="">--Select your specializations--</option>
- {specializations.map((specialization,) => (
-        <option key={specialization.id} value={specialization.category}>
+ {specializations.map((specialization, index) => (
+        <option key={index} value={specialization.category}>
           {specialization.category}
         </option>
       ))}
             </select>
-            <div className="mt-4">
+               <div className="mt-4">
         {selectedSpecializations.length > 0 ? (
           <ul>
             {selectedSpecializations.map((specialization, index) => (
