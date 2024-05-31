@@ -1,11 +1,12 @@
 /** @format */
 import {handleSignUp, handleUserinfo} from "../service/databasefirebase"
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Alert } from "@material-tailwind/react";
 import { Spinner } from "@material-tailwind/react";
 import logo from '../assets/images/logo.png';
 import im2 from '../assets/images/im2.png';
+import jasondataa from "../service/categoriesdata";
 const Register = () => {
 const [mess, setMess]= useState(false)
 const [spin, setSpin]= useState(true)
@@ -14,13 +15,20 @@ const [spin, setSpin]= useState(true)
   const [username, setUsername] = useState("");
   const [age, setAge] = useState("");
   const [role, setrole] = useState('');
+  const [specializations, setSpecializations] = useState([]);
   const [phone, setPhone] = useState("");
   const [profileurl, setProfileurl] = useState(null);
   const [profs, setprofs] = useState(null);
   const [color, setColor] = useState("");
   const navigate = useNavigate();
   const [getfeed, setfeed]= useState('')
+  const dataa = jasondataa();
+  const [selectedSpecializations, setSelectedSpecializations] = useState([]);
 
+  useEffect(() => {
+   
+    setSpecializations(dataa);
+  }, []);
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
 
@@ -36,6 +44,19 @@ const [spin, setSpin]= useState(true)
 const handleSelections=(e)=>{
   setrole(e.target.value);
 }
+
+
+const handleSpecializationChange = (event) => {
+  const options = event.target.options;
+  const selectedValues = [];
+  for (let i = 0, l = options.length; i < l; i++) {
+    if (options[i].selected) {
+      selectedValues.push(options[i].value);
+    }
+  }
+  setSelectedSpecializations(selectedValues);
+  console.log("Selected specializations:", selectedValues);
+};
   return (
     <>
     
@@ -151,6 +172,41 @@ const handleSelections=(e)=>{
             <option value="Palliative Care">Palliative Care</option>
             </select>
             {role && <p>You selected: {role}</p>}
+          </div>
+              {/* Specialist */}
+              <div>
+            <label   htmlFor="role" className="block text-secondaryText">
+             Specialist In
+            </label>
+            <select
+            multiple
+            onChange={handleSpecializationChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primaryButton bg-white"
+            
+           
+              required >
+ <option value="">--Select your specializations--</option>
+ {specializations.map((specialization,) => (
+        <option key={specialization.id} value={specialization.category}>
+          {specialization.category}
+        </option>
+      ))}
+            </select>
+            <div className="mt-4">
+        {selectedSpecializations.length > 0 ? (
+          <ul>
+            {selectedSpecializations.map((specialization, index) => (
+              <li key={index} className="text-gray-700">
+                {specialization}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500">No specializations selected.</p>
+        )}
+      </div>
+            
+            {/* {specializations && <p>You selected: {specializations}</p>} */}
           </div>
           {/* Image picker */}
           <div>
