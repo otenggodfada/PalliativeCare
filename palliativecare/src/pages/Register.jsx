@@ -25,6 +25,8 @@ const Register = () => {
   const navigate = useNavigate();
   const [getfeed, setfeed] = useState("");
   const dataa = jasondataa();
+  const [verify, setverify] = useState(false);
+  const [rating, setrating] = useState(0);
   const dataa1 = professiondata();
   const [selectedSpecializations, setSelectedSpecializations] = useState([]);
   const [selectedSpecializations1, setSelectedSpecializations1] = useState([]);
@@ -114,7 +116,7 @@ const Register = () => {
                 age,
                 profileurl,
                 phone,
-                role,selectedSpecializations, selectedSpecializations1, experience
+                role,selectedSpecializations, selectedSpecializations1, experience, verify , rating
               ).then(() => {
                 setMess(true), setSpin(true), setEmail(""), setPassword("");
               });

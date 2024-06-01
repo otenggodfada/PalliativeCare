@@ -1,14 +1,17 @@
 /** @format */
 import img2 from "../assets/images/im2.png";
-import { useState } from "react";
+
 import jasondataa from "../service/categoriesdata";
 import history from "../service/history";
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getAllDocuments } from "../service/databasefirebase";
 import { createBrowserHistory } from "history";
 import {
   Card,
   CardHeader,
   CardBody,
+  Avatar,
   CardFooter,
   Typography,
   Button,
@@ -18,13 +21,39 @@ import {
 import ViewAllCaretakers from "./view_caretakers";
 
 const Categories = () => {
+  useEffect(() => {
+    // Function to fetch documents and update state
+    const fetchDocuments = async () => {
+      try {
+        const documents = await getAllDocuments(); // Call the function to fetch documents
+        setUsers(documents); // Update state with the fetched documents
+      } catch (error) {
+        console.error("Error fetching documents: ", error);
+      }
+    };
+
+    fetchDocuments(); // Call the function when component mounts
+  }, []);
   const dataa = jasondataa();
   const [searchQuery, setSearchQuery] = useState("");
   const history1 = createBrowserHistory();
+  const [users, setUsers] = useState([]);
+  const filteredUsers = users.filter((user) =>
+    user.specialists.some((profession) =>
+      profession.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
+  const finaluser = filteredUsers.filter((user) =>
+    user.role.includes("Palliative Care")
+  );
+  const finest = (youfillme) => {
+    return finaluser
+      .filter((user) => user.profession.some((p) => p.includes(youfillme)))
+      .slice(0, 4);
+  };
 
   const goBack = () => {
     history1.back();
-
   };
   // const goViewallCaretakers = () => {
   //   history1.replace({to:'/home'})
@@ -41,19 +70,21 @@ const Categories = () => {
   return (
     <div className=" ">
       <header className="bg-accent text-white p-4 fixed top-0 w-screen">
-        <div onClick={ goBack} className="flex items-center">
-       
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="#ffffff"
-            >
-              <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
-            </svg>
-      
-        <div className=" w-full flex justify-center">  <h1 className="text-2xl font-bold ">Categories</h1></div>
+        <div onClick={goBack} className="flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="#ffffff"
+          >
+            <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
+          </svg>
+
+          <div className=" w-full flex justify-center">
+            {" "}
+            <h1 className="text-2xl font-bold ">Categories</h1>
+          </div>
         </div>
       </header>
 
@@ -91,38 +122,60 @@ const Categories = () => {
         <div>
           {filteredCategories.map((service, index) => (
             <li key={index} className="mb-4 mt-3 ">
-              <div className=" w-full shadow bg-white rounded-lg" >
+              <div className=" w-full shadow bg-white rounded-lg">
                 {" "}
-             
-                  <CardBody>
-                    <h2 className="text-xl font-semibold">
-                      {service.category}
-                    </h2>
-                    <p>{service.description}</p>
-                    <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
-                      <Tooltip content="Dr.Wilson">
-                        <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-                          <img className="h-5 w-5" src={img2} alt="" />
-                        </span>
-                      </Tooltip>
-
-                      <Tooltip content="+2 more">
-                        <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-                          <div className="h-5 w-5 flex justify-center items-center">
-                            +2
+                <CardBody>
+                  <h2 className="text-xl font-semibold">{service.category}</h2>
+                  <p>{service.description}</p>
+                  {/* users lists */}
+                  <div className="flex items-center -space-x-3">
+                    <ul className="flex items-center -space-x-3">
+                      {finest(service.category).map((e, indexx) => (
+                        <li key={indexx}>
+                          <div className="flex items-center -space-x-3">
+                            <Tooltip content={e.username}>
+                              <Avatar
+                                size="sm"
+                                variant="circular"
+                                alt="natali craig"
+                                src={e.profilpc}
+                                className="border-2 border-white hover:z-10"
+                              />
+                            </Tooltip>
                           </div>
-                        </span>
-                      </Tooltip>
-                    </div>
-                  </CardBody>
-                  <CardFooter className="pt-3">
-                  <Link to="/viewallcaretakers" state={{ from: service.category, from1: service.description }}>
-                  <Button size="lg" fullWidth={true} className="bg-mypink">
+                        </li>
+                      ))}
+                    </ul>
+                    <Tooltip
+                      content={
+                        finest(service.category).length - 3 < 1
+                          ? "+0 more"
+                          : finest(service.category).length
+                      }
+                    >
+                      <div className="flex justify-center items-center cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+                        <div className=" size-3 flex justify-center items-center">
+                        {finest(service.category).length - 3 < 1
+                            ? "+0"
+                            : finest(service.category).length}
+                        </div>
+                      </div>
+                    </Tooltip>
+                  </div>
+                </CardBody>
+                <CardFooter className="pt-3">
+                  <Link
+                    to="/viewallcaretakers"
+                    state={{
+                      from: service.category,
+                      from1: service.description,
+                    }}
+                  >
+                    <Button size="lg" fullWidth={true} className="bg-mypink">
                       View all caretakers
                     </Button>
                   </Link>
-                  </CardFooter>
-          
+                </CardFooter>
               </div>
             </li>
           ))}

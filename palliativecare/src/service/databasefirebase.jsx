@@ -1,5 +1,6 @@
 /** @format */
 
+import { rating } from "@material-tailwind/react";
 import {
   auth,
   db,
@@ -73,7 +74,9 @@ const handleSignUp = async (
   role,
   profession,
   specialists,
-  experience
+  experience,
+  verify,
+  rating
 ) => {
   try {
     const getprofilelink = await uploadProfileImage(profileurl);
@@ -93,6 +96,8 @@ const handleSignUp = async (
       specialists: specialists,
       email: email,
       experience: experience,
+      verify:verify,
+      rating:rating
     });
     errr("User signed up successfully!");
     console.log("User signed up:", userCredential.user);
