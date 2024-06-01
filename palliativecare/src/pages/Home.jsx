@@ -13,7 +13,20 @@ import { auth } from "../service/firebaseservice";
 const Home = () => {
   const [navigation, setNavigation] = useState(<Dashboard />);
   const [activePage, setActivePage] = useState("Dashboard");
- 
+ const [userd, setuserd] = useState([]);
+
+
+ useEffect(() => {
+  const unsubscribe = auth.onAuthStateChanged((user) => {
+    if (user) {
+      readUserinfo(setuserd);
+    } else {
+    }
+  });
+
+  // Cleanup subscription on unmount
+  return () => unsubscribe();
+}, []);
 
   const handleNavigation = (page) => {
     switch (page) {
@@ -50,7 +63,7 @@ const Home = () => {
               <path d="M360-160q-19 0-34-11t-22-28l-92-241H40v-80h228l92 244 184-485q7-17 22-28t34-11q19 0 34 11t22 28l92 241h172v80H692l-92-244-184 485q-7 17-22 28t-34 11Z" />
             </svg>
           </div>
-          <Dropdown />
+          <Dropdown imgg={userd.profilpc} />
         </div>
       </header>
 

@@ -1,5 +1,6 @@
 /** @format */
 import img1 from "../assets/images/im1.png";
+import { handdlecall } from "../service/communication";
 import React from "react";
 import { useEffect, useState } from "react";
 import Search from "../components/search";
@@ -38,7 +39,7 @@ const Dashboard = () => {
   }, []);
   const filteredUsers = users.filter((user) =>
     user.role.includes("Palliative Care")
-  );
+  ).slice(0,3);
   // const history = useHistory();
   // const navigateToServices = () => {
   //     history.push('/services');
@@ -77,7 +78,7 @@ const Dashboard = () => {
         <div className=" inline-block space-x-3 w-full no-scrollbar overflow-x-auto whitespace-nowrap">
           {/* Dental Specialist */}
 
-          <div className="w-32 h-48 pl-6 pr-7 pt-7 pb-6 bg-accent rounded-3xl flex-col justify-end items-center gap-7 inline-flex  hover:bg-blue-600">
+          <div className="cursor-pointer w-32 h-48 pl-6 pr-7 pt-7 pb-6 bg-accent rounded-3xl flex-col justify-end items-center gap-7 inline-flex  hover:bg-blue-600">
             <svg
               width="56"
               height="65"
@@ -98,7 +99,7 @@ const Dashboard = () => {
             </div>
           </div>
           {/* Heart Specialist */}
-          <div className="w-32 h-48 pl-6 pr-7 pt-7 pb-6  bg-mypink rounded-3xl flex-col justify-end items-center gap-7 inline-flex hover:bg-blue-600 hover:text-rose-500">
+          <div className=" cursor-pointer w-32 h-48 pl-6 pr-7 pt-7 pb-6  bg-mypink rounded-3xl flex-col justify-end items-center gap-7 inline-flex hover:bg-blue-600 hover:text-rose-500">
             <svg
               width="56"
               height="66"
@@ -120,7 +121,7 @@ const Dashboard = () => {
           </div>
 
           {/* Brain Specialist */}
-          <div className="w-32 h-48 pl-6 pr-7 pt-7 pb-6  bg-secondaryButton rounded-3xl flex-col justify-end items-center gap-7 inline-flex hover:bg-blue-600 hover:text-rose-500">
+          <div className="cursor-pointer w-32 h-48 pl-6 pr-7 pt-7 pb-6  bg-secondaryButton rounded-3xl flex-col justify-end items-center gap-7 inline-flex hover:bg-blue-600 hover:text-rose-500">
             <svg
               width="56"
               height="65"
@@ -209,8 +210,8 @@ const Dashboard = () => {
                   <Button className=" bg-mypink">
                     <div>Message</div>
                   </Button>
-                  <Button className="  bg-primaryButton">Profile</Button>
-                  <Button className=" bg-secondaryButton">Call</Button>
+                  <Button onClick={()=>{window.location.href = `mailto:${user.email}`}} className="  bg-primaryButton">Email</Button>
+                  <Button onClick={()=>{window.location.href = `tel:${user.telephone}`}} className=" bg-secondaryButton">Call</Button>
                 </ButtonGroup>
               </div>
             </div>

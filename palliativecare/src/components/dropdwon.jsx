@@ -3,7 +3,7 @@ import { handleSignOut } from "../service/databasefirebase";
 import { Switch } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-const Dropdown = () => {
+const Dropdown = ({imgg}) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [dropiconcolor, setDropiconcolor] = useState("#e8eaed");
@@ -35,7 +35,7 @@ const Dropdown = () => {
   }, []);
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="cursor-pointer relative inline-block text-left">
       <div
         id="dropdownButton"
         onClick={() => {
@@ -47,9 +47,9 @@ const Dropdown = () => {
       >
         <div className=" w-[40px] h-[40px]  bg-primaryBackground rounded-full border-white  border flex object-contain ">
           <img
-            className="  object-fill rounded-full"
-            src="https://www.shutterstock.com/image-photo/healthcare-medical-staff-concept-portrait-600nw-2281024823.jpg"
-            alt=""
+            className="  object-cover rounded-full"
+            src={imgg}
+            alt="profile"
           />
         </div>
       </div>
@@ -70,14 +70,14 @@ const Dropdown = () => {
             role="menuitem"
           >
             <Switch color="green" defaultChecked />{" "}
-            <div className="p-3">Notification</div>
+            <div className="p-3"><h2>Notification</h2></div>
           </div>
 
           <div
             onClick={() => {
               handleSignOut(navigate);
             }}
-            className="flex px-4 py-2 text-sm text-gray-700 "
+            className="flex px-4 py-2 text-sm text-gray-700  cursor-pointer"
             role="menuitem"
           >
             <svg
@@ -89,7 +89,7 @@ const Dropdown = () => {
             >
               <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
             </svg>{" "}
-            SignOut
+        <h3>SignOut</h3>
           </div>
         </div>
       </div>

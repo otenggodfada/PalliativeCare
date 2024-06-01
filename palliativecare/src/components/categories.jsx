@@ -3,6 +3,8 @@ import img2 from "../assets/images/im2.png";
 import { useState } from "react";
 import jasondataa from "../service/categoriesdata";
 import history from "../service/history";
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { createBrowserHistory } from "history";
 import {
   Card,
   CardHeader,
@@ -13,11 +15,21 @@ import {
   Tooltip,
   IconButton,
 } from "@material-tailwind/react";
+import ViewAllCaretakers from "./view_caretakers";
 
 const Categories = () => {
   const dataa = jasondataa();
   const [searchQuery, setSearchQuery] = useState("");
+  const history1 = createBrowserHistory();
 
+  const goBack = () => {
+    history1.back();
+
+  };
+  // const goViewallCaretakers = () => {
+  //   history1.replace({to:'/home'})
+
+  // };
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -29,8 +41,8 @@ const Categories = () => {
   return (
     <div className=" ">
       <header className="bg-accent text-white p-4 fixed top-0 w-screen">
-        <div onClick={  history.push('/home')} className="flex items-center">
-          <a href="">
+        <div onClick={ goBack} className="flex items-center">
+       
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"
@@ -40,7 +52,7 @@ const Categories = () => {
             >
               <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
             </svg>
-          </a>{" "}
+      
         <div className=" w-full flex justify-center">  <h1 className="text-2xl font-bold ">Categories</h1></div>
         </div>
       </header>
@@ -104,9 +116,11 @@ const Categories = () => {
                     </div>
                   </CardBody>
                   <CardFooter className="pt-3">
-                    <Button size="lg" fullWidth={true} className="bg-mypink">
+                  <Link to="/viewallcaretakers" state={{ from: service.category, from1: service.description }}>
+                  <Button size="lg" fullWidth={true} className="bg-mypink">
                       View all caretakers
                     </Button>
+                  </Link>
                   </CardFooter>
           
               </div>

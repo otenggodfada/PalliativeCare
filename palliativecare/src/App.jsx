@@ -14,6 +14,7 @@ import SplashScreen from './pages/Splashscreen.jsx';
 
 import Caretakers from './components/caretakers.jsx';
 import Categories from './components/categories.jsx';
+import ViewAllCaretakers from './components/view_caretakers.jsx';
 
 
 
@@ -91,6 +92,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path='/caretakers' element={
             <ProtectedRoute>
               <Caretakers />
+            </ProtectedRoute>
+          }/>
+
+<Route path='/viewallcaretakers' element={
+            <ProtectedRoute>
+              <ViewAllCaretakers />
             </ProtectedRoute>
           }/>
           {/* ... other routes */}

@@ -5,12 +5,18 @@ import { ButtonGroup, Button } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
 import { getAllDocuments } from "../service/databasefirebase";
 import { createBrowserHistory } from 'history';
-const Caretakers = () => {
+import { useLocation } from 'react-router-dom'
 
+const ViewAllCaretakers = ({props}) => {
+    
     const [searchQuery, setSearchQuery] = useState("");
     const [users, setUsers] = useState([]); // State to hold the fetched users
     const history1 = createBrowserHistory();
-
+    const location = useLocation()
+    const { from, from1 } = location.state
+    
+    const descriptions =from1
+    const catego = from
     const goBack = () => {
       history1.back();
 
@@ -30,7 +36,7 @@ const Caretakers = () => {
     }, []);
     const filteredUsers = users.filter(user => user.specialists.some(profession => profession.toLowerCase().includes(searchQuery.toLowerCase())));
 const finaluser = filteredUsers.filter(user => user.role.includes("Palliative Care"));
-const finest = finaluser.filter(user => user.specialists.includes("Dental Specialist"))
+const finest = finaluser.filter(user => user.profession.some(p => p.includes(catego)))
     const handleSearchChange = (e) => {
       setSearchQuery(e.target.value);
     };
@@ -53,7 +59,7 @@ const finest = finaluser.filter(user => user.specialists.includes("Dental Specia
               </svg>
            </div>
            
-          <div className=" w-full flex justify-center">  <h1 className="text-2xl font-bold ">CareTakers</h1></div>
+          <div className=" w-full flex justify-center">  <h1 className="text-2xl font-bold ">{catego}</h1></div>
           </div>
         </header>
   
@@ -87,9 +93,14 @@ const finest = finaluser.filter(user => user.specialists.includes("Dental Specia
               </div>
             </div>
           </div>
-  
+         <div className=" p-5">
+         <h2 className="text-xl font-semibold">
+                      {catego}
+                    </h2>
+                    <p>{descriptions}</p>
+         </div>
           <div>
-            {finaluser.map((user, index) => (
+            {finest.map((user, index) => (
               <li key={index} className="mb-4 mt-3 ">
                       <div className="flex p-2 w-full h-17  bg-white rounded-2xl shadow-2xl flex-col">
               {/* Profile Card */}
@@ -155,4 +166,4 @@ const finest = finaluser.filter(user => user.specialists.includes("Dental Specia
      );
 }
  
-export default Caretakers;
+export default ViewAllCaretakers;

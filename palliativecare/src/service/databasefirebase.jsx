@@ -22,11 +22,10 @@ import { Timestamp } from "firebase/firestore";
 
 // Function to upload profile image to Firebase Storage
 const uploadProfileImage = async (profileUrl) => {
- 
   const storageRef = ref(storage, "profile_images/" + generateRandomName());
   try {
     const metadata = {
-      contentType: 'image/jpeg'
+      contentType: "image/jpeg",
     };
     // Upload file to Firebase Storage
     await uploadBytes(storageRef, profileUrl, metadata);
@@ -56,11 +55,9 @@ const generateRandomName = () => {
 let time = {
   seconds: 1613748319,
   nanoseconds: 47688698687,
-}
+};
 
-const fireBaseTime = new Date(
-  time.seconds * 1000 + time.nanoseconds / 1000000,
-);
+const fireBaseTime = new Date(time.seconds * 1000 + time.nanoseconds / 1000000);
 const date = fireBaseTime.toDateString();
 const atTime = fireBaseTime.toLocaleTimeString();
 const handleSignUp = async (
@@ -74,9 +71,9 @@ const handleSignUp = async (
   profileurl,
   telephone,
   role,
-  profession, specialists,
+  profession,
+  specialists,
   experience
-
 ) => {
   try {
     const getprofilelink = await uploadProfileImage(profileurl);
@@ -94,8 +91,8 @@ const handleSignUp = async (
       role: role,
       profession: profession,
       specialists: specialists,
-      email:email,
-      experience: experience
+      email: email,
+      experience: experience,
     });
     errr("User signed up successfully!");
     console.log("User signed up:", userCredential.user);
@@ -146,38 +143,27 @@ const handleUserinfo = async () => {
 };
 // Read or listen to user info from db
 const readUserinfo = (userdetails) => {
- 
   try {
-    
-    const unsubscribe = onSnapshot(doc(db, "users", auth.currentUser.uid), (docSnapshot) => {
-      if (docSnapshot.exists()) {
+    const unsubscribe = onSnapshot(
+      doc(db, "users", auth.currentUser.uid),
+      (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          var locall = [];
+          locall = docSnapshot.data();
 
-        var locall = []
-   locall = docSnapshot.data()
-   
+          userdetails(locall);
+        } else {
+          console.log("No such document!");
+        }
+      }
+    );
 
-
-userdetails(locall)
-    
-   
-    
-      } else {
-        console.log("No such document!");
-      } 
-    }); 
-    
     // Optional: Return the unsubscribe function if you want to stop listening later
     return unsubscribe;
-    
   } catch (error) {
     console.error("Error reading user info: ", error);
   }
-
 };
-
-
-
-
 
 //Read or listen to public users
 
@@ -185,17 +171,17 @@ const getAllDocuments = async () => {
   try {
     // Fetch all documents in the "users" collection
     const querySnapshot = await getDocs(collection(db, "users"));
-    
+
     // Extract the data from each document
-    const documents = querySnapshot.docs.map(doc => doc.data());
-    
+    const documents = querySnapshot.docs.map((doc) => doc.data());
+
     // Log each username to the console
-    documents.forEach(doc => {
-     doc.profession.map((e)=>{
-console.log(e)
-     })
-    });
-    
+    //     documents.forEach(doc => {
+    //      doc.profession.map((e)=>{
+    // console.log(e)
+    //      })
+    //     });
+
     // Return the array of document data
     return documents;
   } catch (error) {
@@ -205,12 +191,11 @@ console.log(e)
 
 getAllDocuments();
 
-
 export {
   handleSignUp,
   handleSignOut,
   handlelogin,
   handleUserinfo,
   readUserinfo,
-  getAllDocuments
+  getAllDocuments,
 };
