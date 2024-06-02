@@ -202,7 +202,7 @@ const Profile = () => {
             {userData.role==='Palliative Care'&&(  <div className="flex items-center justify-center mb-2">
                 <FontAwesomeIcon icon={faBriefcase} className="mr-2 text-mypink" />
                 <p className="text-gray-600">
-                  <span className="font-semibold">Experience:</span> {userData.experience}
+                  <span className="font-semibold">Experience:</span> {userData.experience}years
                 </p>
               </div>)}
                {userData.role==='Palliative Care'&&( <div className="flex items-center justify-center mb-2">

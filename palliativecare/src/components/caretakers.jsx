@@ -116,20 +116,10 @@ const finest = finaluser.filter(user => user.specialists.includes("Dental Specia
                   ))}
                   <div className="flex">
                     {" "}
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M7 0C8.85652 0 10.637 0.737498 11.9497 2.05025C13.2625 3.36301 14 5.14348 14 7C14 8.85652 13.2625 10.637 11.9497 11.9497C10.637 13.2625 8.85652 14 7 14C5.14348 14 3.36301 13.2625 2.05025 11.9497C0.737498 10.637 0 8.85652 0 7C0 5.14348 0.737498 3.36301 2.05025 2.05025C3.36301 0.737498 5.14348 0 7 0ZM6.34375 3.28125V7C6.34375 7.21875 6.45312 7.42383 6.63633 7.54688L9.26133 9.29688C9.56211 9.49922 9.96953 9.41719 10.1719 9.11367C10.3742 8.81016 10.2922 8.40547 9.98867 8.20312L7.65625 6.65V3.28125C7.65625 2.91758 7.36367 2.625 7 2.625C6.63633 2.625 6.34375 2.91758 6.34375 3.28125Z"
-                        fill="black"
-                      />
-                    </svg>
+                   
+                    <svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="#ff145b"><path d="M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm0-80h640v-440H160v440Zm240-520h160v-80H400v80ZM160-200v-440 440Z"/></svg>
                     <div className="  text-black text-xs font-semibold font-['Inter'] pl-1">
-                      10:00 AM - 12:30 PM
+                    {user.experience}years
                     </div>
                   </div>
                 </div>
@@ -141,8 +131,22 @@ const finest = finaluser.filter(user => user.specialists.includes("Dental Specia
                   <Button className=" bg-mypink">
                     <div>Message</div>
                   </Button>
-                  <Button className="  bg-primaryButton">Email</Button>
-                  <Button className=" bg-secondaryButton">Call</Button>
+                  <Button
+                    onClick={() => {
+                      window.location.href = `mailto:${user.email}`;
+                    }}
+                    className="  bg-primaryButton"
+                  >
+                    Email
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      window.location.href = `tel:${user.telephone}`;
+                    }}
+                    className=" bg-secondaryButton"
+                  >
+                    Call
+                  </Button>
                 </ButtonGroup>
               </div>
             </div>

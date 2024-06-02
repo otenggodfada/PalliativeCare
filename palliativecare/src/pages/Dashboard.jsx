@@ -1,15 +1,28 @@
 /** @format */
 import img1 from "../assets/images/im1.png";
 import { handdlecall } from "../service/communication";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 import React from "react";
+import { readUserinfo, updateUserinfo } from "../service/databasefirebase"; // Assuming you have an update function
 import { useEffect, useState } from "react";
 import Search from "../components/search";
 import DialogImage from "../components/dialogviewimage";
-import { ButtonGroup, Button } from "@material-tailwind/react";
+import { ButtonGroup, Button, IconButton } from "@material-tailwind/react";
 import Catergories from "../components/categories";
 import { Link } from "react-router-dom";
 import jasondataa from "../service/categoriesdata";
 import { getAllDocuments } from "../service/databasefirebase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCamera,
+  faStar,
+  faUser,
+  faCalendar,
+  faPhone,
+  faEnvelope,
+  faBriefcase,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   auth,
   db,
@@ -20,9 +33,18 @@ import {
 } from "../service/firebaseservice";
 
 const Dashboard = () => {
-  const lengg = [{}, {}, {}];
+  const [isFavorite, setFavorites] = React.useState([]);
 
-  const [users, setUsers] = useState([]); // State to hold the fetched users
+  const [users, setUsers] = useState([]);
+
+  const handleIsFavorite = async (index, user) => {
+    setFavorites((prevFavorites) => {
+      const newFavorites = [...prevFavorites];
+      newFavorites[index] = !newFavorites[index];
+
+      return newFavorites;
+    });
+  };
 
   useEffect(() => {
     // Function to fetch documents and update state
@@ -40,11 +62,6 @@ const Dashboard = () => {
   const filteredUsers = users
     .filter((user) => user.role.includes("Palliative Care"))
     .slice(0, 3);
-  // const history = useHistory();
-  // const navigateToServices = () => {
-  //     history.push('/services');
-
-  //   };
 
   return (
     <section className="bg-offWhite pt-4 rounded mt-10 ">
@@ -187,6 +204,25 @@ const Dashboard = () => {
           <div key={index} className="mb-4 mt-3">
             <div className="flex p-2 w-full h-17  bg-white rounded-2xl shadow-2xl flex-col">
               {/* Profile Card */}
+              <div className=" absolute right-5  px-3">
+                <IconButton
+                  variant="text"
+                  size="sm"
+                  color={isFavorite[index] ? "red" : "blue-gray"}
+                  onClick={() => {
+                    handleIsFavorite(index, user);
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="h-5 w-5"
+                  >
+                    <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                  </svg>
+                </IconButton>
+              </div>
               <div className="flex">
                 <div>
                   {" "}
@@ -211,19 +247,16 @@ const Dashboard = () => {
                   <div className="flex">
                     {" "}
                     <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
                       xmlns="http://www.w3.org/2000/svg"
+                      height="14px"
+                      viewBox="0 -960 960 960"
+                      width="14px"
+                      fill="#ff145b"
                     >
-                      <path
-                        d="M7 0C8.85652 0 10.637 0.737498 11.9497 2.05025C13.2625 3.36301 14 5.14348 14 7C14 8.85652 13.2625 10.637 11.9497 11.9497C10.637 13.2625 8.85652 14 7 14C5.14348 14 3.36301 13.2625 2.05025 11.9497C0.737498 10.637 0 8.85652 0 7C0 5.14348 0.737498 3.36301 2.05025 2.05025C3.36301 0.737498 5.14348 0 7 0ZM6.34375 3.28125V7C6.34375 7.21875 6.45312 7.42383 6.63633 7.54688L9.26133 9.29688C9.56211 9.49922 9.96953 9.41719 10.1719 9.11367C10.3742 8.81016 10.2922 8.40547 9.98867 8.20312L7.65625 6.65V3.28125C7.65625 2.91758 7.36367 2.625 7 2.625C6.63633 2.625 6.34375 2.91758 6.34375 3.28125Z"
-                        fill="black"
-                      />
+                      <path d="M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm0-80h640v-440H160v440Zm240-520h160v-80H400v80ZM160-200v-440 440Z" />
                     </svg>
                     <div className="  text-black text-xs font-semibold font-['Inter'] pl-1">
-                      10:00 AM - 12:30 PM
+                      {user.experience}years
                     </div>
                   </div>
                 </div>

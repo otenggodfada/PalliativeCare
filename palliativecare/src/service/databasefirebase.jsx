@@ -190,12 +190,7 @@ const getAllDocuments = async () => {
     // Extract the data from each document
     const documents = querySnapshot.docs.map((doc) => doc.data());
 
-    // Log each username to the console
-    //     documents.forEach(doc => {
-    //      doc.profession.map((e)=>{
-    // console.log(e)
-    //      })
-    //     });
+   
 
     // Return the array of document data
     return documents;
@@ -203,8 +198,29 @@ const getAllDocuments = async () => {
     console.error("Error getting documents: ", error);
   }
 };
-
 getAllDocuments();
+
+//Update user data by public
+const setAllDocuments = async (documents) => {
+  try {
+    // Iterate over the documents array and set each document in the "users" collection
+    const setPromises = documents.map((document) => {
+      const docRef = doc(collection(db, "users"), document.id); // Assuming each document has an 'id' field
+      return setDoc(docRef, document);
+    });
+
+    // Wait for all set operations to complete
+    await Promise.all(setPromises);
+
+    console.log("All documents have been set successfully");
+  } catch (error) {
+    console.error("Error setting documents: ", error);
+  }
+};
+
+
+
+
 
 export {
   handleSignUp,
@@ -213,4 +229,5 @@ export {
   handleUserinfo,
   readUserinfo,
   getAllDocuments,
+  setAllDocuments,
 };

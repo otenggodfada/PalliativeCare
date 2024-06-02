@@ -15,7 +15,13 @@ import SplashScreen from './pages/Splashscreen.jsx';
 import Caretakers from './components/caretakers.jsx';
 import Categories from './components/categories.jsx';
 import ViewAllCaretakers from './components/view_caretakers.jsx';
-
+import Messages from './pages/Messages.jsx';
+import FAQs from './pages/faqs.jsx';
+import UserGuides from './pages/UserGuides';
+import CustomerSupport from './pages/CustomerSupport';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import AppVersion from './pages/AppVersion';
+import Feedback from './pages/Feedback';
 
 
 
@@ -79,6 +85,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Dashboard />
             </ProtectedRoute>
           }/>
+            <Route path='/messages' element={
+            <ProtectedRoute>
+              <Messages />
+            </ProtectedRoute>
+          }/>
           <Route path='/profile' element={
             <ProtectedRoute>
               <Profile />
@@ -101,6 +112,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             </ProtectedRoute>
           }/>
           {/* ... other routes */}
+          <Route path="/faqs" element={<FAQs />} />
+        <Route path="/user-guides" element={<UserGuides />} />
+        <Route path="/customer-support" element={<CustomerSupport />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/app-version" element={<AppVersion />} />
+        <Route path="/feedback" element={<Feedback />} />
         </Routes>
 
 
