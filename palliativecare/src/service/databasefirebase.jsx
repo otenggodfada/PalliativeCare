@@ -170,6 +170,16 @@ const readUserinfo = (userdetails) => {
   }
 };
 
+// Function to update user info in Firestore
+export const updateUserinfo = async (userData) => {
+  const user = auth.currentUser;
+  if (user) {
+    const docRef = doc(db, "users", user.uid);
+    await setDoc(docRef, userData, { merge: true });
+  }
+};
+
+
 //Read or listen to public users
 
 const getAllDocuments = async () => {

@@ -45,13 +45,13 @@ const Dropdown = ({imgg}) => {
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        <div className=" w-[40px] h-[40px]  bg-primaryBackground rounded-full border-white  border flex object-contain ">
+      
           <img
-            className="  object-cover rounded-full"
+            className="  object-cover  w-[40px] h-[40px] border-2  rounded-full"
             src={imgg}
             alt="profile"
           />
-        </div>
+        
       </div>
       <div
         id="dropdownMenu"

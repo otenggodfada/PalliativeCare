@@ -278,9 +278,7 @@ const Register = () => {
                     </p>
                   )}
                 </div>
-              </div>
-            )}
-  {/* Experience */}
+                  {/* Experience */}
   <div>
               <label htmlFor="experience" className="block text-secondaryText">
                 Experience
@@ -298,6 +296,10 @@ const Register = () => {
                 required
               ></input>
             </div>
+              </div>
+              
+            )}
+
             <div>
               <label htmlFor="filepicker" className="block text-secondaryText">
                 Profile Picture
