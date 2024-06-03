@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db, collection, getDocs, setDoc, doc, onSnapshot, deleteDoc } from "../service/firebaseservice";
 import { auth } from "../service/firebaseservice";
 import { FaEdit, FaTrash, FaSearch, FaPlus, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import Header from './hearder';
 
 const HealthRecordsComponent = () => {
   const [records, setRecords] = useState([]);
@@ -13,6 +14,7 @@ const HealthRecordsComponent = () => {
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -70,6 +72,7 @@ const HealthRecordsComponent = () => {
         await setDoc(doc(collection(db, 'healthRecords')), { record: newRecord, userId: userId });
       }
       setNewRecord('');
+      setIsAdding(false);
     } catch (error) {
       console.error('Error adding document: ', error);
     }
@@ -79,6 +82,7 @@ const HealthRecordsComponent = () => {
     setEditMode(true);
     setNewRecord(record.record);
     setEditId(record.id);
+    setIsAdding(true);
   };
 
   const deleteRecord = async (id) => {
@@ -92,54 +96,88 @@ const HealthRecordsComponent = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg">
-      <h2 className="text-3xl font-bold text-center mb-8">Health Records</h2>
-      <div className="mb-6 flex items-center justify-between">
-        <div className="flex items-center w-2/3">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search records"
-            className="border border-gray-300 rounded-lg py-2 px-3 w-full"
-          />
-          <button className="ml-2 bg-blue-500 text-white p-2 rounded-lg text-sm"><FaSearch /></button>
-        </div>
-        <select
-          value={sortType}
-          onChange={(e) => setSortType(e.target.value)}
-          className="border border-gray-300 rounded-lg py-2 px-3 w-1/3 text-sm"
-        >
-          <option value="">Sort by</option>
-          <option value="ascending">Ascending</option>
-          <option value="descending">Descending</option>
-        </select>
-      </div>
-      <ul>
-        {sortedRecords.map(record => (
-          <li key={record.id} className="border rounded-lg p-4 mb-4 flex items-center justify-between">
-            <span className="text-lg">{record.record}</span>
-            <div className="flex items-center">
-              <button onClick={() => editRecord(record)} className="bg-yellow-500 text-white px-3 py-2 rounded-md text-sm mr-2"><FaEdit /></button>
-              <button onClick={() => deleteRecord(record.id)} className="bg-red-500 text-white px-3 py-2 rounded-md text-sm"><FaTrash /></button>
+    <div>
+      <Header  title={'Health Records'} />
+      <div className="  bg-white shadow-md rounded-lg   mb-3 m-2 mt-20 p-4">
+        <div className=" items-center mt-8">
+          {!isAdding && (
+            <button 
+              onClick={() => setIsAdding(true)} 
+              className="bg-mypink text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition duration-200 ease-in-out"
+            >
+              Add New Record <FaPlus className="inline-block ml-2" />
+            </button>
+          )}
+          {isAdding && (
+            <div className="flex flex-col justify-center items-center">
+              <input
+                type="text"
+                value={newRecord}
+                onChange={(e) => setNewRecord(e.target.value)}
+                className="border border-gray-300 rounded-lg py-2 px-3 w-full"
+                placeholder="Enter new record"
+              />
+            <div className='p-3'>
+            <button 
+                onClick={addRecord} 
+                className="bg-mypink w-[100px] text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition duration-200 ease-in-out"
+              >
+                {editMode ? 'Update Record' : 'Add'} <FaPlus className="inline-block ml-2" />
+              </button>
+              <button 
+                onClick={() => {
+                  setIsAdding(false);
+                  setEditMode(false);
+                  setNewRecord('');
+                }} 
+                className="bg-gray-500 w-[100px]  text-white px-4 py-2 rounded-lg text-sm ml-2 hover:bg-gray-600 transition duration-200 ease-in-out"
+              >
+                Cancel
+              </button>
             </div>
-          </li>
-        ))}
-      </ul>
-      <div className="flex justify-between items-center mt-8">
-        <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} className="bg-gray-300 text-gray-700 px-3 py-2 rounded-lg text-sm"><FaArrowLeft /></button>
-        <span className="text-lg">{`Page ${currentPage} of ${Math.ceil(filteredRecords.length / recordsPerPage)}`}</span>
-        <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === Math.ceil(filteredRecords.length / recordsPerPage)} className="bg-gray-300 text-gray-700 px-3 py-2 rounded-lg text-sm"><FaArrowRight /></button>
-      </div>
-      <div className="flex items-center mt-8">
-        <input
-          type="text"
-          value={newRecord}
-          onChange={(e) => setNewRecord(e.target.value)}
-          className="border border-gray-300 rounded-lg py-2 px-3 w-3/4 mr-4"
-          placeholder="Enter new record"
-        />
-        <button onClick={addRecord} className="bg-green-500 text-white px-4 py-2 rounded-lg text-sm">{editMode ? 'Update Record' : 'Add Record'} <FaPlus /></button>
+            </div>
+          )}
+        </div>
+        <div className="mb-6 flex items-center justify-between mt-4">
+          <div className="flex items-center w-2/3">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search records"
+              className="border border-gray-300 rounded-lg py-2 px-3 w-full"
+            />
+   <div className='p-2'>
+   <button className="ml-2 bg-blue-500 text-white p-2 rounded-lg text-sm hover:bg-blue-600 transition duration-200 ease-in-out"> <FaSearch /></button>
+   </div>
+          </div>
+          
+          <select
+            value={sortType}
+            onChange={(e) => setSortType(e.target.value)}
+            className="border border-gray-300 rounded-lg py-2 px-3 w-1/3 text-sm"
+          >
+            <option value="">Sort by</option>
+            <option value="ascending">Ascending</option>
+            <option value="descending">Descending</option>
+          </select>
+        </div>
+        <ul>
+          {sortedRecords.map(record => (
+            <li key={record.id} className="border rounded-lg p-4 mb-4 flex items-center justify-between">
+              <span className="text-lg">{record.record}</span>
+              <div className="flex items-center">
+                <button onClick={() => editRecord(record)} className="bg-yellow-500 text-white px-3 py-2 rounded-md text-sm mr-2 hover:bg-yellow-600 transition duration-200 ease-in-out"><FaEdit /></button>
+                <button onClick={() => deleteRecord(record.id)} className="bg-red-500 text-white px-3 py-2 rounded-md text-sm hover:bg-red-600 transition duration-200 ease-in-out"><FaTrash /></button>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div className="flex justify-between items-center mt-8">
+          <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} className="bg-gray-300 text-gray-700 px-3 py-2 rounded-lg text-sm hover:bg-gray-400 transition duration-200 ease-in-out disabled:opacity-50"><FaArrowLeft /></button>
+          <span className="text-lg">{`Page ${currentPage} of ${Math.ceil(filteredRecords.length / recordsPerPage)}`}</span>
+          <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === Math.ceil(filteredRecords.length / recordsPerPage)} className="bg-gray-300 text-gray-700 px-3 py-2 rounded-lg text-sm hover:bg-gray-400 transition duration-200 ease-in-out disabled:opacity-50"><FaArrowRight /></button>
+        </div>
       </div>
     </div>
   );
