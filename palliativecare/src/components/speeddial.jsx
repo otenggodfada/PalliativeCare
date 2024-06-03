@@ -44,7 +44,7 @@ const SpeedDial1 = () => {
               <PencilIcon className="h-5 w-5" />
               <Typography {...labelProps}>Blog</Typography>
             </SpeedDialAction>
-            <SpeedDialAction className="relative">
+            <SpeedDialAction onClick={()=>{navigate('/stracker')}} className="relative">
               <ClipboardDocumentListIcon className="h-5 w-5" />
               <Typography {...labelProps}>Symptom Tracking</Typography>
             </SpeedDialAction>

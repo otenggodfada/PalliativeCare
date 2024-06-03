@@ -23,6 +23,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import AppVersion from './pages/AppVersion';
 import Feedback from './pages/Feedback';
 import HealthRecordsComponent from './components/managehealthrecord.jsx';
+import SymptomTracker from './components/symptoms_tracker.jsx';
 
 
 
@@ -84,6 +85,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
            <Route path='/healthr' element={
             <ProtectedRoute>
               <HealthRecordsComponent />
+            </ProtectedRoute>
+          }/>
+             <Route path='/stracker' element={
+            <ProtectedRoute>
+              <SymptomTracker />
             </ProtectedRoute>
           }/>
           <Route path='/dashboard' element={
