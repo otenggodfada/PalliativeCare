@@ -97,7 +97,8 @@ const handleSignUp = async (
       email: email,
       experience: experience,
       verify:verify,
-      rating:rating
+      rating:rating,
+      Id:auth.currentUser.uid
     });
     errr("User signed up successfully!");
     console.log("User signed up:", userCredential.user);

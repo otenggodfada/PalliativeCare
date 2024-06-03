@@ -11,7 +11,7 @@ import { readUserinfo } from "../service/databasefirebase";
 import { auth } from "../service/firebaseservice";
 import Messages from "./Messages";
 import SpeedDial from "../components/speeddial";
-
+import MyChats from "../components/mychats";
 
 const Home = () => {
   const [navigation, setNavigation] = useState(<Dashboard />);
@@ -36,7 +36,7 @@ const Home = () => {
         setNavigation(<Dashboard />);
         break;
       case "Messages":
-        setNavigation(<Messages />);
+        setNavigation(<MyChats />);
         break;
       case "Settings":
         setNavigation(<Settings />);

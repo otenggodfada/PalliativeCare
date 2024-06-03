@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBrowserHistory } from 'history';
-const Header = ({title}) => {
+const Header = ({title, img}) => {
     const history1 = createBrowserHistory();
 
     const goBack = () => {
@@ -8,8 +8,8 @@ const Header = ({title}) => {
 
     };
   return (
-    <header className="bg-accent text-white p-4 fixed top-0 w-screen ">
-      <div className="flex items-center">
+    <header className="bg-accent text-white p-4 fixed top-0 w-screen flex-row flex  justify-around items-center">
+     
         <div onClick={goBack}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -21,10 +21,14 @@ const Header = ({title}) => {
             <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
           </svg>
         </div>
-        <div className="w-full flex justify-center">
-          <h1 className="text-2xl font-bold text-center">{title}</h1>
-        </div>
-      </div>
+       
+  <img
+                src={img}
+                alt="Profile"
+                className="w-10 h-10 rounded-full  object-cover"
+              />      <h1 className="text-2xl font-bold text-center">{title}</h1>
+      
+    
     </header>
   );
 };

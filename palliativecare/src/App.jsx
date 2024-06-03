@@ -24,6 +24,8 @@ import AppVersion from './pages/AppVersion';
 import Feedback from './pages/Feedback';
 import HealthRecordsComponent from './components/managehealthrecord.jsx';
 import SymptomTracker from './components/symptoms_tracker.jsx';
+import Chat from './components/chat_component.jsx';
+import MyChats from './components/mychats.jsx';
 
 
 
@@ -92,6 +94,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <SymptomTracker />
             </ProtectedRoute>
           }/>
+              <Route path='/chat' element={
+            <ProtectedRoute>
+              <Chat />
+            </ProtectedRoute>
+          }/>
           <Route path='/dashboard' element={
             <ProtectedRoute>
               <Dashboard />
@@ -117,7 +124,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Caretakers />
             </ProtectedRoute>
           }/>
-
+   <Route path='/mychats' element={
+            <ProtectedRoute>
+              <MyChats />
+            </ProtectedRoute>
+          }/>
 <Route path='/viewallcaretakers' element={
             <ProtectedRoute>
               <ViewAllCaretakers />
