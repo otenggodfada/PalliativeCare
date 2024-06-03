@@ -55,7 +55,7 @@ const Home = () => {
    <>
 
 <div className="bg-primaryBackground text-primaryText flex flex-col min-h-screen">
-<SpeedDial></SpeedDial>
+
       <header className="bg-accent text-white p-4 fixed top-0 w-screen">
 
         <div className="flex items-center justify-between">
@@ -77,7 +77,9 @@ const Home = () => {
         </div>
       </header>
 
-      <main className="p-4 flex-grow">{navigation}</main>
+      <main className="p-4 flex-grow">{navigation}
+      <SpeedDial></SpeedDial>
+      </main>
 
       <footer className="bg-accent text-white p-4 mt-4 fixed bottom-0 w-full">
         <div className="container mx-auto flex justify-between">

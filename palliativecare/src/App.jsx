@@ -22,6 +22,7 @@ import CustomerSupport from './pages/CustomerSupport';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import AppVersion from './pages/AppVersion';
 import Feedback from './pages/Feedback';
+import HealthRecordsComponent from './components/managehealthrecord.jsx';
 
 
 
@@ -78,6 +79,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path='/settings' element={
             <ProtectedRoute>
               <Settings />
+            </ProtectedRoute>
+          }/>
+           <Route path='/healthr' element={
+            <ProtectedRoute>
+              <HealthRecordsComponent />
             </ProtectedRoute>
           }/>
           <Route path='/dashboard' element={
