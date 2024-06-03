@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Typography, Card, CardBody, Button } from "@material-tailwind/react";
-
+import Header from "../components/hearder";
 const UserGuides = () => {
   const guides = [
     {
@@ -28,9 +28,10 @@ const UserGuides = () => {
   ];
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <Typography variant="h4" className="text-center mb-6">User Guides/Tutorials</Typography>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="">
+  
+      <Header title={'User Guides/Tutorials'}></Header>
+      <div className="px-2 pt-20 mb-3 grid grid-cols-1 md:grid-cols-2 gap-8">
         {guides.map((guide, index) => (
           <Card key={index} className="shadow-lg">
             <CardBody>

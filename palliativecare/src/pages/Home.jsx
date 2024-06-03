@@ -10,6 +10,8 @@ import DrawerWithNavigation from "../components/drawer";
 import { readUserinfo } from "../service/databasefirebase";
 import { auth } from "../service/firebaseservice";
 import Messages from "./Messages";
+import SpeedDial from "../components/speeddial";
+
 
 const Home = () => {
   const [navigation, setNavigation] = useState(<Dashboard />);
@@ -49,8 +51,13 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-primaryBackground text-primaryText flex flex-col min-h-screen">
+
+   <>
+
+<div className="bg-primaryBackground text-primaryText flex flex-col min-h-screen">
+<SpeedDial></SpeedDial>
       <header className="bg-accent text-white p-4 fixed top-0 w-screen">
+
         <div className="flex items-center justify-between">
           <DrawerWithNavigation />
           <div className="pl-4 flex flex-row items-center">
@@ -120,8 +127,10 @@ const Home = () => {
             </svg>
           </div>
         </div>
+        
       </footer>
     </div>
+   </>
   );
 };
 

@@ -1,12 +1,13 @@
 import React from "react";
 import { Typography } from "@material-tailwind/react";
-
+import Header from "../components/hearder";
 const PrivacyPolicy = () => {
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <Typography variant="h4" className="text-center mb-6">Privacy Policy and Terms of Service</Typography>
+    <div className="">
+          <Header title={'Privacy Policy and Terms of Service'}></Header>
+     
 
-      <div className="space-y-6">
+      <div className="px-2 pt-20 mb-3">
         <section>
           <Typography variant="h5" className="mb-2">Privacy Policy</Typography>
           <Typography variant="h6" className="mb-2">Introduction</Typography>

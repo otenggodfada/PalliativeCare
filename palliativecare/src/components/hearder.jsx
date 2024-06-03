@@ -22,7 +22,7 @@ const Header = ({title}) => {
           </svg>
         </div>
         <div className="w-full flex justify-center">
-          <h1 className="text-2xl font-bold">{title}</h1>
+          <h1 className="text-2xl font-bold text-center">{title}</h1>
         </div>
       </div>
     </header>
