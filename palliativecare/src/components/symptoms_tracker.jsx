@@ -3,7 +3,7 @@ import { db, collection, getDocs, setDoc, doc, onSnapshot, deleteDoc, getDoc } f
 import { auth } from "../service/firebaseservice";
 import { FaEdit, FaTrash, FaSearch, FaPlus, FaArrowLeft, FaArrowRight, FaPencilAlt } from 'react-icons/fa';
 import Header from './hearder';
-
+import { Typography, Input, Textarea, Button, Card, CardBody } from "@material-tailwind/react";
 const SymptomTracker = () => {
   const [symptoms, setSymptoms] = useState([]);
   const [newSymptom, setNewSymptom] = useState('');
@@ -193,7 +193,7 @@ const SymptomTracker = () => {
           {!isAdding && !trackingMode && (
             <button 
               onClick={() => setIsAdding(true)} 
-              className="bg-green-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition duration-200 ease-in-out"
+              className="bg-mypink text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition duration-200 ease-in-out"
             >
               Add New Symptom <FaPlus className="inline-block ml-2" />
             </button>
@@ -247,13 +247,18 @@ const SymptomTracker = () => {
               )}
               {trackingMode && (
                 <>
-                  <input
+                 <div className='w-full mb-2'>
+                 <Input
+                label='date'
                     type="date"
+                    
                     value={logDate}
                     onChange={(e) => setLogDate(e.target.value)}
-                    className="border border-gray-300 rounded-lg py-2 px-3 w-full mb-2"
+                    className="border border-gray-300 rounded-lg py-2 px-3 w-full mb-2 text-mypink"
                     placeholder="Select date"
                   />
+                 </div>
+                  
                   <textarea
                     value={logEntry}
                     onChange={(e) => setLogEntry(e.target.value)}
@@ -264,13 +269,13 @@ const SymptomTracker = () => {
               )}
               <button 
                 onClick={() => { isAdding ? addSymptom() : logSymptom(editId); }} 
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600 transition duration-200 ease-in-out"
+                className="bg-mypink text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600 transition duration-200 ease-in-out"
               >
                 {isAdding ? 'Save Symptom' : 'Log Symptom'}
               </button>
               <button 
                 onClick={() => { setIsAdding(false); setTrackingMode(false); setEditMode(false); setEditId(null); }} 
-                className="bg-red-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-600 transition duration-200 ease-in-out mt-2"
+                className="bg-gray-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-600 transition duration-200 ease-in-out mt-2"
               >
                 Cancel
               </button>
@@ -298,6 +303,14 @@ const SymptomTracker = () => {
         <ul>
           {currentSymptoms.map((symptom) => (
             <li key={symptom.id} className="bg-gray-100 p-4 mb-4 rounded-lg flex items-center justify-between">
+                  <div className='p-1'>
+               <button 
+                  onClick={() => handleTrackSymptom(symptom.id)} 
+                  className="bg-yellow-500 text-white px-2 py-1 rounded-lg text-sm hover:bg-yellow-600 transition duration-200 ease-in-out "
+                >
+                  Log +
+                </button>
+               </div>
               <div className='text-black cursor-pointer' onClick={() => handleShowModal(symptom)}>{symptom.name}</div>
               <div className="flex items-center">
                 <button 
@@ -308,16 +321,11 @@ const SymptomTracker = () => {
                 </button>
                 <button 
                   onClick={() => deleteSymptom(symptom.id)} 
-                  className="bg-red-500 text-white px-2 py-1 rounded-lg text-sm hover:bg-red-600 transition duration-200 ease-in-out"
+                  className="bg-mypink text-white px-2 py-1 rounded-lg text-sm hover:bg-red-600 transition duration-200 ease-in-out"
                 >
                   <FaTrash />
                 </button>
-                <button 
-                  onClick={() => handleTrackSymptom(symptom.id)} 
-                  className="bg-yellow-500 text-white px-2 py-1 rounded-lg text-sm hover:bg-yellow-600 transition duration-200 ease-in-out"
-                >
-                  Log
-                </button>
+             
               </div>
             </li>
           ))}
