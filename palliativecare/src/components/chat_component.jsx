@@ -56,8 +56,8 @@ const Chat = () => {
         <div className="flex-grow overflow-y-auto p-4">
           {loading ? (
             <div className="flex flex-col justify-center items-center h-full">
-              <i className="fas fa-spinner fa-spin text-gray-600 text-4xl"></i>
-              <p className="text-gray-600 mt-2">Loading...</p>
+              <i className="fas fa-spinner fa-spin text-mypink text-4xl"></i>
+              <p className="text-mypink mt-2">Loading...</p>
             </div>
           ) : messages.length > 0 ? (
             messages.map(msg => (
@@ -85,8 +85,8 @@ const Chat = () => {
             ))
           ) : (
             <div className="flex flex-col justify-center items-center h-full">
-              <i className="fas fa-comment-slash text-gray-600 text-4xl"></i>
-              <p className="text-gray-600 mt-2">No messages</p>
+              <i className="fas fa-comment-slash text-mypink text-4xl"></i>
+              <p className="text-mypink mt-2">No messages</p>
             </div>
           )}
         </div>
