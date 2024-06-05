@@ -9,12 +9,16 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
-  const { from: receiverId, from1: profilpc, from2: email, from3: username } = location.state;
+  const { from: receiverId, from1: profilpc, from2: email, from3: username, from4: senderusername, from5: senderprofilpc, from6: senderemail } = location.state;
 
   useEffect(() => {
     const user = auth.currentUser;
     if (user) {
+      console.log('Current user:', user.uid);
+      console.log('Chatting with:', receiverId);
+
       const unsubscribe = onSnapshot(
         query(
           collection(db, 'messages'),
@@ -23,8 +27,13 @@ const Chat = () => {
           orderBy('timestamp')
         ),
         snapshot => {
-          setMessages(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-          setLoading(false); // Set loading to false after data is fetched
+          const fetchedMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          console.log('Fetched messages:', fetchedMessages);
+          setMessages(fetchedMessages);
+          setLoading(false);
+        },
+        error => {
+          console.error('Error fetching messages:', error);
         }
       );
       return () => unsubscribe();
@@ -35,32 +44,53 @@ const Chat = () => {
     if (inputMessage.trim() !== '') {
       const user = auth.currentUser;
       if (user) {
-        await addDoc(collection(db, 'messages'), {
-          senderUid: user.uid,
-          recipientUid: recipientUid,
-          message: inputMessage,
-          timestamp: new Date(),
-          profilpc: user.photoURL || profilpc, // Assuming user.photoURL is the profile picture URL of the sender
-          email: email,
-          username: username,
-        });
-        setInputMessage('');
+        try {
+          await addDoc(collection(db, 'messages'), {
+            senderUid: user.uid,
+            recipientUid: recipientUid,
+            sendermessage: inputMessage,
+            timestamp: new Date(),
+            senderprofilpc: senderprofilpc,
+            recipientemail: email,
+            senderusername: senderusername,
+            recipientprofilpc: profilpc,
+            recipientusername: username,
+            senderemail: senderemail
+          });
+          setInputMessage('');
+        } catch (error) {
+          console.error('Error sending message:', error);
+        }
       }
     }
   };
 
+  // Filter messages based on search query
+  const filteredMessages = messages.filter(msg =>
+    msg.sendermessage && msg.sendermessage.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div>
       <ChatHeader title={username} img={profilpc} />
-      <div className="flex flex-col h-screen mt-20">
+      <div className="flex flex-col h-screen mt-20 mb-10">
+        <div className="flex items-center mx-4 my-2">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search messages..."
+            className="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-mypink flex-grow"
+          />
+        </div>
         <div className="flex-grow overflow-y-auto p-4">
           {loading ? (
-            <div className="flex flex-col justify-center items-center h-full">
+            <div className="flex flex-col justify-center items-center h-full absolute top-0 left-0 bottom-0 right-0">
               <i className="fas fa-spinner fa-spin text-mypink text-4xl"></i>
               <p className="text-mypink mt-2">Loading...</p>
             </div>
-          ) : messages.length > 0 ? (
-            messages.map(msg => (
+          ) : filteredMessages.length > 0 ? (
+            filteredMessages.map(msg => (
               <div key={msg.id} className={`flex items-start my-2 ${msg.senderUid === auth.currentUser.uid ? 'justify-end' : 'justify-start'}`}>
                 {msg.senderUid !== auth.currentUser.uid && (
                   <img
@@ -70,7 +100,7 @@ const Chat = () => {
                   />
                 )}
                 <div
-                  className={`p-3 rounded-lg max-w-lg ${
+                  className={`p-3 rounded-lg ${
                     msg.senderUid === auth.currentUser.uid
                       ? 'bg-mypink text-white'
                       : 'bg-gray-300 text-gray-900'
@@ -79,17 +109,19 @@ const Chat = () => {
                   <span className="font-bold">
                     {msg.senderUid === auth.currentUser.uid ? 'You' : username}
                   </span>
-                  : {msg.message}
+                  : {msg.sendermessage}
                 </div>
               </div>
             ))
           ) : (
-            <div className="flex flex-col justify-center items-center h-full">
+            <div className="flex flex-col justify-center items-center h-full absolute top-0 left-0 bottom-0 right-0">
               <i className="fas fa-comment-slash text-mypink text-4xl"></i>
               <p className="text-mypink mt-2">No messages</p>
             </div>
           )}
         </div>
+      </div>
+      <footer className="fixed bottom-0 right-0 left-0">
         <div className="flex p-4 border-t bg-white shadow">
           <input
             type="text"
@@ -105,7 +137,7 @@ const Chat = () => {
             Send
           </button>
         </div>
-      </div>
+      </footer>
     </div>
   );
 };

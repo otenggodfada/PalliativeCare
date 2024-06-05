@@ -9,16 +9,18 @@ import { useEffect, useState } from "react";
 import Search from "../components/search";
 import DialogImage from "../components/dialogviewimage";
 import { ButtonGroup, Button, IconButton } from "@material-tailwind/react";
-
+import { readUserinfo, updateUserinfo } from "../service/databasefirebase"; 
 import { Link } from "react-router-dom";
 import jasondataa from "../service/categoriesdata";
 import { getAllDocuments } from "../service/databasefirebase";
-
+import { auth } from "../service/firebaseservice";
 import { heart, dental, brain } from "../utils/svgfiles";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera, faStar, faUser, faCalendar, faPhone, faEnvelope, faBriefcase,faSuitcase } from '@fortawesome/free-solid-svg-icons';
 const Dashboard = () => {
   const [isFavorite, setFavorites] = React.useState([]);
-
+  const [userData, setUserData] = useState({});
   const [users, setUsers] = useState([]);
 const navigate = useNavigate();
   const handleIsFavorite = async (index, user) => {
@@ -29,7 +31,17 @@ const navigate = useNavigate();
       return newFavorites;
     });
   };
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        readUserinfo(setUserData);
+      } else {
+        setUserData({});
+      }
+    });
 
+    return () => unsubscribe();
+  }, []);
   useEffect(() => {
     // Function to fetch documents and update state
     const fetchDocuments = async () => {
@@ -141,7 +153,7 @@ const navigate = useNavigate();
       {/* Top Caretakers */}
       <div className="flex justify-between pt-5 pb-5">
         <span>
-          <h2 className=" text-xl font-medium">Top CareTakers</h2>
+          <h2 className=" text-xl font-medium">Top CareGivers</h2>
         </span>{" "}
         <Link
           to="/caretakers"
@@ -157,23 +169,7 @@ const navigate = useNavigate();
             <div className="flex p-2 w-full h-17  bg-white rounded-2xl shadow-2xl flex-col">
               {/* Profile Card */}
               <div className=" absolute right-5  px-3">
-                <IconButton
-                  variant="text"
-                  size="sm"
-                  color={isFavorite[index] ? "red" : "blue-gray"}
-                  onClick={() => {
-                    handleIsFavorite(index, user);
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="h-5 w-5"
-                  >
-                    <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                  </svg>
-                </IconButton>
+              
               </div>
               <div className="flex">
                 <div>
@@ -198,15 +194,7 @@ const navigate = useNavigate();
                   ))}
                   <div className="flex">
                     {" "}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="14px"
-                      viewBox="0 -960 960 960"
-                      width="14px"
-                      fill="#ff145b"
-                    >
-                      <path d="M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm0-80h640v-440H160v440Zm240-520h160v-80H400v80ZM160-200v-440 440Z" />
-                    </svg>
+                    <FontAwesomeIcon icon={faBriefcase} className=" text-mypink" />
                     <div className="  text-black text-xs font-semibold font-['Inter'] pl-1">
                       {user.experience}years
                     </div>
@@ -219,7 +207,7 @@ const navigate = useNavigate();
                 <ButtonGroup fullWidth>
                 <Link className="  bg-mypink rounded-l-lg"  to={'/chat'}
             state={{
-              from: `${user.Id}` , from1: `${user.profilpc}` , from2: `${user.email}` , from3: `${user.username}` 
+              from: `${user.Id}` , from1: `${user.profilpc}` , from2: `${user.email}` , from3: `${user.username}` ,from4: `${userData.username}`, from5: `${userData.profilpc}`, from6: `${userData.email}`
          
             }}> <Button  className=" bg-mypink">
                     <div>Message</div>

@@ -6,7 +6,7 @@ import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
-import Settings from './pages/Settings.jsx';
+
 import Dashboard from './pages/Dashboard.jsx';
 import Profile from './pages/Profile.jsx';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -15,7 +15,7 @@ import SplashScreen from './pages/Splashscreen.jsx';
 import Caretakers from './components/caretakers.jsx';
 import Categories from './components/categories.jsx';
 import ViewAllCaretakers from './components/view_caretakers.jsx';
-import Messages from './pages/Messages.jsx';
+
 import FAQs from './pages/faqs.jsx';
 import UserGuides from './pages/UserGuides';
 import CustomerSupport from './pages/CustomerSupport';
@@ -26,6 +26,7 @@ import HealthRecordsComponent from './components/managehealthrecord.jsx';
 import SymptomTracker from './components/symptoms_tracker.jsx';
 import Chat from './components/chat_component.jsx';
 import MyChats from './components/mychats.jsx';
+import CreateBlog from './pages/Blogsposts.jsx';
 
 
 
@@ -79,9 +80,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Home />
             </ProtectedRoute>
           }/>
-          <Route path='/settings' element={
+          <Route path='/createblog' element={
             <ProtectedRoute>
-              <Settings />
+              <CreateBlog />
             </ProtectedRoute>
           }/>
            <Route path='/healthr' element={
@@ -104,11 +105,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Dashboard />
             </ProtectedRoute>
           }/>
-            <Route path='/messages' element={
-            <ProtectedRoute>
-              <Messages />
-            </ProtectedRoute>
-          }/>
+         
           <Route path='/profile' element={
             <ProtectedRoute>
               <Profile />

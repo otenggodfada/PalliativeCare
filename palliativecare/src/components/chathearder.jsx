@@ -21,12 +21,12 @@ const ChatHeader = ({title, img}) => {
             <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
           </svg>
         </div>
-       
+<div className='flex  items-center flex-row '>       
   <img
                 src={img}
                 alt="Profile"
                 className="w-10 h-10 rounded-full  object-cover"
-              />      <h1 className="text-2xl font-bold text-center">{title}</h1>
+              />      <h1 className="text-2xl font-bold text-center pl-2">{title}</h1></div>
       
     
     </header>

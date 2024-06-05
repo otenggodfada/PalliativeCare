@@ -6,7 +6,11 @@ import { createBrowserHistory } from "history";
 import { ButtonGroup, Button } from "@material-tailwind/react";
 import DialogImage from "../components/dialogviewimage";
 import { getAllDocuments } from "../service/databasefirebase";
-
+import { auth } from "../service/firebaseservice";
+import { Link } from "react-router-dom";
+import { readUserinfo, updateUserinfo } from "../service/databasefirebase"; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera, faStar, faUser, faCalendar, faPhone, faEnvelope, faBriefcase,faSuitcase } from '@fortawesome/free-solid-svg-icons';
 const ViewAllCaretakers = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [users, setUsers] = useState([]);
@@ -14,6 +18,22 @@ const ViewAllCaretakers = () => {
   const history1 = createBrowserHistory();
   const location = useLocation();
   const { from: catego, from1: descriptions } = location.state;
+
+
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        readUserinfo(setUserData);
+      } else {
+        setUserData({});
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -107,7 +127,7 @@ const ViewAllCaretakers = () => {
             </div>
           ) : finest.length === 0 ? (
             <div className="flex justify-center items-center h-64">
-              <p>No caretakers found</p>
+              <p>No caregivers found</p>
             </div>
           ) : (
             finest.map((user, index) => (
@@ -131,7 +151,7 @@ const ViewAllCaretakers = () => {
                       ))}
                       <div className="flex">
                        
-                    <svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="#ff145b"><path d="M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm0-80h640v-440H160v440Zm240-520h160v-80H400v80ZM160-200v-440 440Z"/></svg>
+                      <FontAwesomeIcon icon={faBriefcase} className=" text-mypink" />
                     <div className="  text-black text-xs font-semibold font-['Inter'] pl-1">
                     {user.experience}years
                     </div>
@@ -141,9 +161,13 @@ const ViewAllCaretakers = () => {
                   <div className="pt-3">
                 {" "}
                 <ButtonGroup fullWidth>
-                  <Button className=" bg-mypink">
+                <Link className="  bg-mypink rounded-l-lg"  to={'/chat'}
+            state={{
+              from: `${user.Id}` , from1: `${user.profilpc}` , from2: `${user.email}` , from3: `${user.username}` ,from4: `${userData.username}`, from5: `${userData.profilpc}`, from6: `${userData.email}`
+         
+            }}> <Button  className=" bg-mypink">
                     <div>Message</div>
-                  </Button>
+                  </Button> </Link>
                   <Button
                     onClick={() => {
                       window.location.href = `mailto:${user.email}`;

@@ -5,8 +5,26 @@ import { ButtonGroup, Button } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
 import { getAllDocuments } from "../service/databasefirebase";
 import { createBrowserHistory } from 'history';
+import { auth } from "../service/firebaseservice";
+import { Link } from "react-router-dom";
+import { readUserinfo, updateUserinfo } from "../service/databasefirebase"; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera, faStar, faUser, faCalendar, faPhone, faEnvelope, faBriefcase,faSuitcase } from '@fortawesome/free-solid-svg-icons';
 const Caretakers = () => {
 
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        readUserinfo(setUserData);
+      } else {
+        setUserData({});
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
     const [searchQuery, setSearchQuery] = useState("");
     const [users, setUsers] = useState([]); // State to hold the fetched users
     const history1 = createBrowserHistory();
@@ -15,6 +33,9 @@ const Caretakers = () => {
       history1.back();
 
     };
+
+
+
     useEffect(() => {
       // Function to fetch documents and update state
       const fetchDocuments = async () => {
@@ -53,7 +74,7 @@ const finest = finaluser.filter(user => user.specialists.includes("Dental Specia
               </svg>
            </div>
            
-          <div className=" w-full flex justify-center">  <h1 className="text-2xl font-bold ">CareTakers</h1></div>
+          <div className=" w-full flex justify-center">  <h1 className="text-2xl font-bold ">CareGivers</h1></div>
           </div>
         </header>
   
@@ -117,7 +138,7 @@ const finest = finaluser.filter(user => user.specialists.includes("Dental Specia
                   <div className="flex">
                     {" "}
                    
-                    <svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="#ff145b"><path d="M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm0-80h640v-440H160v440Zm240-520h160v-80H400v80ZM160-200v-440 440Z"/></svg>
+                    <FontAwesomeIcon icon={faBriefcase} className=" text-mypink" />
                     <div className="  text-black text-xs font-semibold font-['Inter'] pl-1">
                     {user.experience}years
                     </div>
@@ -128,9 +149,13 @@ const finest = finaluser.filter(user => user.specialists.includes("Dental Specia
               <div className="pt-3">
                 {" "}
                 <ButtonGroup fullWidth>
-                  <Button className=" bg-mypink">
+                <Link className="  bg-mypink rounded-l-lg"  to={'/chat'}
+            state={{
+              from: `${user.Id}` , from1: `${user.profilpc}` , from2: `${user.email}` , from3: `${user.username}` ,from4: `${userData.username}`, from5: `${userData.profilpc}`, from6: `${userData.email}`
+         
+            }}> <Button  className=" bg-mypink">
                     <div>Message</div>
-                  </Button>
+                  </Button> </Link>
                   <Button
                     onClick={() => {
                       window.location.href = `mailto:${user.email}`;
