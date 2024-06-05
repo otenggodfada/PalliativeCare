@@ -57,11 +57,12 @@ const Home = () => {
 
 <div className="bg-primaryBackground text-primaryText flex flex-col min-h-screen">
 
-   
+<div className=" fixed  w-full h-full bg-mypink">ddddd</div>
 
       <main className="p-4 flex-grow">{navigation}
+      
       <header className="bg-accent text-white p-4 fixed top-0 right-0 left-0 w-full  ">
-
+    
 <div className="flex items-center justify-between">
   <DrawerWithNavigation />
   <div className="pl-4 flex flex-row items-center">
@@ -80,7 +81,9 @@ const Home = () => {
   <Dropdown imgg={userd.profilpc} />
 </div>
 </header>
+
       <SpeedDial></SpeedDial>
+      
       </main>
 
       <footer className="bg-accent text-white p-4 mt-4 fixed bottom-0 w-full">

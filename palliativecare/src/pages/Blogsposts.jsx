@@ -144,12 +144,12 @@ const CreateBlog = () => {
           </div>
         ) : blogs.length > 0 ? (
           <div className="w-full max-w-md">
-            <h2 className="text-2xl font-bold mb-4">Your Blog List</h2>
+            <h2 className="text-2xl font-bold mb-4">Your Blogs</h2>
             <div className="overflow-hidden">
               {blogs.map((blog, index) => (
                 <div key={index} className="p-4 border-b m-2 bg-white rounded-lg shadow-sm">
                   <h3 className="text-lg font-bold mb-2">{blog.title}</h3>
-                  <p className="text-gray-700">{stripHtmlTags(blog.content)}</p>
+                  <p className="text-gray-700">{stripHtmlTags(blog.content).slice(0,120)}</p>
                   <div className="flex items-center justify-between mt-4">
                     <button className="text-mypink hover:text-blue-700 font-medium" onClick={() => handleEdit(blog.id)}>
                       Edit
@@ -165,8 +165,8 @@ const CreateBlog = () => {
         ) : (
    
            <div className="flex flex-col justify-center items-center  ">
-            <i className="fas fa-comment-slash text-mypink text-4xl"></i>
-            <p className="text-mypink mt-2">No blogs found</p>
+            <i className="fas fa-plus-square text-mypink text-4xl"></i>
+            <p className="text-mypink mt-2">Create Your First Blog</p>
           </div>
       
         )}

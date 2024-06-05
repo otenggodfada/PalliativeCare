@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-
+import React, { useState , useEffect} from 'react';
+import { auth } from '../service/firebaseservice';
+import { readUserinfo } from '../service/databasefirebase';
 import { 
   IconButton,
   SpeedDial,
@@ -22,6 +23,18 @@ import {
 from "@heroicons/react/24/outline";
 import { useNavigate } from 'react-router-dom';
 const SpeedDial1 = () => {
+  const [userData, setUserData] = useState({});
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        readUserinfo(setUserData);
+      } else {
+        setUserData({});
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
   const navigate = useNavigate();
   const labelProps = {
     variant: "small",
@@ -40,10 +53,10 @@ const SpeedDial1 = () => {
             </IconButton>
           </SpeedDialHandler>
           <SpeedDialContent className="rounded-full border border-blue-gray-50 bg-white shadow-xl shadow-black/10">
-            <SpeedDialAction onClick={()=>{navigate('/createblog')}}className="relative">
+        {userData.role ==='Palliative Care'&&     <SpeedDialAction onClick={()=>{navigate('/createblog')}}className="relative">
               <PencilIcon className="h-5 w-5" />
               <Typography {...labelProps}>Blog</Typography>
-            </SpeedDialAction>
+            </SpeedDialAction>}
             <SpeedDialAction onClick={()=>{navigate('/stracker')}} className="relative">
               <ClipboardDocumentListIcon className="h-5 w-5" />
               <Typography {...labelProps}>Symptom Tracking</Typography>

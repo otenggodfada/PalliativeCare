@@ -13,16 +13,16 @@ const Header = ({title}) => {
         <div onClick={goBack}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            height="24px"
+            height="27px"
             viewBox="0 -960 960 960"
-            width="24px"
+            width="27px"
             fill="#ffffff"
           >
             <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
           </svg>
         </div>
         <div className="w-full flex justify-center">
-          <h1 className="text-2xl font-bold ">{title}</h1>
+          <h1 className="text-2xl font-bold  text-center ">{title}</h1>
         </div>
       </div>
     </header>
