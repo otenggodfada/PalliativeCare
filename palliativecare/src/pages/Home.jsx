@@ -12,7 +12,8 @@ import { auth } from "../service/firebaseservice";
 
 import SpeedDial from "../components/speeddial";
 import MyChats from "../components/mychats";
-import CreateBlog from "./Blogsposts";
+
+import BlogListPage from "../components/BlogListPage";
 const Home = () => {
   const [navigation, setNavigation] = useState(<Dashboard />);
   const [activePage, setActivePage] = useState("Dashboard");
@@ -38,8 +39,8 @@ const Home = () => {
       case "Messages":
         setNavigation(<MyChats />);
         break;
-      case "Createblog":
-        setNavigation(<CreateBlog />);
+      case "Allblogs":
+        setNavigation(<BlogListPage />);
         break;
       case "Profile":
         setNavigation(<Profile />);
@@ -107,11 +108,11 @@ const Home = () => {
               <path d="M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
             </svg>
           </div>
-          <div onClick={() => handleNavigation("Createblog")}>
+          <div onClick={() => handleNavigation("Allblogs")}>
          
 
             <svg xmlns="http://www.w3.org/2000/svg" height="27px" viewBox="0 -960 960 960" width="27px"
-              fill={activePage === "Createblog" ? "#FF2A70" : "white"}><path d="M200-120q-33 0-56.5-23.5T120-200q0-33 23.5-56.5T200-280q33 0 56.5 23.5T280-200q0 33-23.5 56.5T200-120Zm480 0q0-117-44-218.5T516-516q-76-76-177.5-120T120-680v-120q142 0 265 53t216 146q93 93 146 216t53 265H680Zm-240 0q0-67-25-124.5T346-346q-44-44-101.5-69T120-440v-120q92 0 171.5 34.5T431-431q60 60 94.5 139.5T560-120H440Z"/></svg>
+              fill={activePage === "Allblogs" ? "#FF2A70" : "white"}><path d="M200-120q-33 0-56.5-23.5T120-200q0-33 23.5-56.5T200-280q33 0 56.5 23.5T280-200q0 33-23.5 56.5T200-120Zm480 0q0-117-44-218.5T516-516q-76-76-177.5-120T120-680v-120q142 0 265 53t216 146q93 93 146 216t53 265H680Zm-240 0q0-67-25-124.5T346-346q-44-44-101.5-69T120-440v-120q92 0 171.5 34.5T431-431q60 60 94.5 139.5T560-120H440Z"/></svg>
           </div>
           <div onClick={() => handleNavigation("Profile")}>
             <svg

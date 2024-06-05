@@ -29,6 +29,7 @@ import MyChats from './components/mychats.jsx';
 import CreateBlog from './pages/Blogsposts.jsx';
 import EditBlog from './components/EditBlog.jsx';
 import BlogListPage from './components/BlogListPage.jsx';
+import BlogDetailPage from './components/BlogDetailPage.jsx';
 
 const AuthContext = React.createContext();
 
@@ -88,6 +89,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
            <Route path='/healthr' element={
             <ProtectedRoute>
               <HealthRecordsComponent />
+            </ProtectedRoute>
+          }/>
+
+<Route path='/blog/:blogId' element={
+            <ProtectedRoute>
+              <BlogDetailPage />
+            </ProtectedRoute>
+          }/>
+          <Route path='/allblogs' element={
+            <ProtectedRoute>
+              <BlogListPage />
             </ProtectedRoute>
           }/>
              <Route path='/stracker' element={
