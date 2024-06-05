@@ -18,7 +18,7 @@ const Home = () => {
   const [navigation, setNavigation] = useState(<Dashboard />);
   const [activePage, setActivePage] = useState("Dashboard");
   const [userd, setuserd] = useState([]);
-
+const [changetrue, setchangetrue] = useState(false);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -57,7 +57,7 @@ const Home = () => {
 
 <div className="bg-primaryBackground text-primaryText flex flex-col min-h-screen">
 
-<div className=" fixed  w-full h-full bg-mypink">ddddd</div>
+{changetrue&&<div className=" fixed  w-full h-full bg-[#f0f0fcec]">ddddd</div>}
 
       <main className="p-4 flex-grow">{navigation}
       
@@ -82,7 +82,7 @@ const Home = () => {
 </div>
 </header>
 
-      <SpeedDial></SpeedDial>
+      <SpeedDial onchangedd={setchangetrue}></SpeedDial>
       
       </main>
 

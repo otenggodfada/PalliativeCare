@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { db, collection, getDocs, setDoc, doc, onSnapshot, deleteDoc, getDoc } from "../service/firebaseservice";
 import { auth } from "../service/firebaseservice";
-import { FaEdit, FaTrash, FaSearch, FaPlus, FaArrowLeft, FaArrowRight, FaPencilAlt } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaPlus, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import Header from './hearder';
-import { Typography, Input, Textarea, Button, Card, CardBody } from "@material-tailwind/react";
+import { Input } from "@material-tailwind/react";
 const SymptomTracker = () => {
   const [symptoms, setSymptoms] = useState([]);
   const [newSymptom, setNewSymptom] = useState('');

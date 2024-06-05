@@ -1,15 +1,14 @@
-import jasondataa from "../service/categoriesdata";
-import img2 from "../assets/images/im2.png";
+/* eslint-disable react/jsx-key */
 import DialogImage from "../components/dialogviewimage";
-import { ButtonGroup, Button } from "@material-tailwind/react";
+import { ButtonGroup, Button, Tooltip } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
 import { getAllDocuments } from "../service/databasefirebase";
 import { createBrowserHistory } from 'history';
 import { auth } from "../service/firebaseservice";
 import { Link } from "react-router-dom";
-import { readUserinfo, updateUserinfo } from "../service/databasefirebase"; 
+import { readUserinfo } from "../service/databasefirebase"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCamera, faStar, faUser, faCalendar, faPhone, faEnvelope, faBriefcase,faSuitcase } from '@fortawesome/free-solid-svg-icons';
+import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
 const Caretakers = () => {
 
   const [userData, setUserData] = useState({});
@@ -51,7 +50,6 @@ const Caretakers = () => {
     }, []);
     const filteredUsers = users.filter(user => user.specialists.some(profession => profession.toLowerCase().includes(searchQuery.toLowerCase())));
 const finaluser = filteredUsers.filter(user => user.role.includes("Palliative Care"));
-const finest = finaluser.filter(user => user.specialists.includes("Dental Specialist"))
     const handleSearchChange = (e) => {
       setSearchQuery(e.target.value);
     };
@@ -123,7 +121,7 @@ const finest = finaluser.filter(user => user.specialists.includes("Dental Specia
                 <div className="p-2  flex-col flex justify-center  space-y-1 ">
                   {" "}
                   <div className="  text-black text-base font-bold font-['Inter']">
-                    <h1> {user.username}</h1>
+                  <div className="flex flex-row gap-1">  <h1> {user.username}</h1> {user.verify && <Tooltip content="Verified" ><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff145b"><path d="m344-60-76-128-144-32 14-148-98-112 98-112-14-148 144-32 76-128 136 58 136-58 76 128 144 32-14 148 98 112-98 112 14 148-144 32-76 128-136-58-136 58Zm34-102 102-44 104 44 56-96 110-26-10-112 74-84-74-86 10-112-110-24-58-96-102 44-104-44-56 96-110 24 10 112-74 86 74 84-10 114 110 24 58 96Zm102-318Zm-42 142 226-226-56-58-170 170-86-84-56 56 142 142Z"/></svg></Tooltip>}</div>
                   </div>
                   {user.specialists.map((e) => (
                     <div className="  text-black text-[15px] font-semibold font-['Inter']">
@@ -131,9 +129,9 @@ const finest = finaluser.filter(user => user.specialists.includes("Dental Specia
                     </div>
                   ))}
                   {user.profession.map((e) => (
-                    <div className=" text-black text-sm  font-normal font-['Inter']">
+                    <div className=" text-black text-sm  font-normal font-['Inter'] ">
                       <h3> {e}</h3>
-                    </div>
+                    </div >
                   ))}
                   <div className="flex">
                     {" "}
