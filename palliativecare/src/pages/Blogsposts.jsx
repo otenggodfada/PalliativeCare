@@ -1,40 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { auth } from '../service/firebaseservice'; // Assuming this imports Firebase Auth
+import { getFirestore, collection, where, addDoc, serverTimestamp, doc, deleteDoc, getDocs, query } from 'firebase/firestore';
+import { auth } from '../service/firebaseservice';
 import { useNavigate } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { readUserinfo, updateUserinfo } from "../service/databasefirebase"; 
-import FirebaseUploadAdapter from '../service/FirebaseUploadAdaptor'; // Import the custom upload adapter
+import FirebaseUploadAdapter from '../service/FirebaseUploadAdaptor';
+import Header from '../components/hearder'; // Assuming this is a custom header component
 
 const CreateBlog = () => {
   const db = getFirestore();
   const navigate = useNavigate();
+  const user = auth.currentUser;
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
-  const [authorProfilePic, setAuthorProfilePic] = useState('');
-  const [userData, setUserData] = useState({});
+  const [blogs, setBlogs] = useState([]);
+  const [showAddBlog, setShowAddBlog] = useState(false);
+  const [fetchingBlogs, setFetchingBlogs] = useState(true);
+
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const fetchBlogs = async () => {
       if (user) {
-        readUserinfo(setUserData);
-      } else {
-        setUserData({});
+        const q = query(collection(db, 'blogs'), where('authorUid', '==', user.uid));
+        const querySnapshot = await getDocs(q);
+        setBlogs(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        setFetchingBlogs(false); // Set fetching to false after fetching blogs
       }
-    });
+    };
 
-    return () => unsubscribe();
-  }, []);
-
-
-  useEffect(() => {
-    const user = auth.currentUser;
-    if (user) {
-      setAuthorProfilePic(user.photoURL || ''); // Set default or placeholder URL if photoURL is not available
-    }
-  }, []);
+    fetchBlogs();
+  }, [db, user]);
 
   const handleEditorChange = (event, editor) => {
     const data = editor.getData();
@@ -46,17 +42,14 @@ const CreateBlog = () => {
     setLoading(true);
 
     try {
-      const user = auth.currentUser;
       if (!user) {
         throw new Error('User not authenticated');
       }
 
-      await addDoc(collection(db, 'blogs'), {
+      const docRef = await addDoc(collection(db, 'blogs'), {
         title,
         content,
         authorUid: user.uid,
-        authorUsername: userData.username,
-        authorProfilePic: userData.profilpc, // Save the author's profile picture URL
         timestamp: serverTimestamp(),
       });
 
@@ -68,57 +61,116 @@ const CreateBlog = () => {
     }
   };
 
+  const handleEdit = (blogId) => {
+    navigate(`/edit-blog/${blogId}`);
+  };
+
+  const handleDelete = async (blogId) => {
+    if (window.confirm('Are you sure you want to delete this blog post?')) {
+      await deleteDoc(doc(db, 'blogs', blogId));
+      const updatedBlogs = blogs.filter(blog => blog.id !== blogId);
+      setBlogs(updatedBlogs);
+    }
+  };
+
+  // Utility function to strip HTML tags from content
+  const stripHtmlTags = (htmlContent) => {
+    const div = document.createElement('div');
+    div.innerHTML = htmlContent;
+    return div.textContent || div.innerText || '';
+  };
+
   return (
-    <div className="flex flex-col items-center mt-20 mb-20">
-      <h1 className="text-3xl font-bold mb-5">Create a New Blog Post</h1>
-      <form className="w-full max-w-md" onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-          />
+    <div className="w-full">
+      <Header title={'Blog Posts'} />
+      <div className="flex flex-col gap-8 p-3 mt-20 justify-center items-center">
+        <div className="w-full md:w-1/2 lg:w-2/3">
+          {!showAddBlog && (
+            <button
+              className="bg-mypink hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              onClick={() => setShowAddBlog(true)}
+            >
+              Add New Blog
+            </button>
+          )}
+          {showAddBlog && (
+            <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                <input
+                  type="text"
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">Content</label>
+                <CKEditor 
+                  editor={ClassicEditor}
+                  data={content}
+                  onChange={handleEditorChange}
+                  config={{
+                    extraPlugins: [MyCustomUploadAdapterPlugin],
+                    toolbar: [
+                      'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
+                      'imageUpload', 'undo', 'redo'
+                    ]
+                  }}
+                />
+              </div>
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  className={`bg-mypink hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={loading}
+                >
+                  {loading ? 'Creating...' : 'Create'}
+                </button>
+              </div>
+            </form>
+          )}
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="content">
-            Content
-          </label>
-          <CKEditor 
-            editor={ClassicEditor}
-            data={content}
-            onChange={handleEditorChange}
-            config={{
-              extraPlugins: [MyCustomUploadAdapterPlugin],
-              toolbar: [
-                'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
-                'imageUpload', 'undo', 'redo'
-              ]
-            }}
-          />
-        </div>
-        <div className="flex items-center justify-between">
-          <button
-            type="submit"
-            className={`bg-mypink hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
-              loading ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
-            disabled={loading}
-          >
-            {loading ? 'Creating...' : 'Create'}
-          </button>
-        </div>
-      </form>
+        {!fetchingBlogs && blogs.length > 0 && (
+          <div className="w-full max-w-md">
+            <h2 className="text-2xl font-bold mb-4">Your Blog List</h2>
+            <div className="overflow-hidden">
+              {blogs.map((blog, index) => (
+                <div key={index} className="p-4 border-b m-2 bg-white rounded-lg shadow-sm">
+                  <h3 className="text-lg font-bold mb-2">{blog.title}</h3>
+                  <p className="text-gray-700">{stripHtmlTags(blog.content)}</p>
+                  <div className="flex items-center justify-between mt-4">
+                    <button className="text-mypink hover:text-blue-700 font-medium" onClick={() => handleEdit(blog.id)}>
+                      Edit
+                    </button>
+                    <button className="text-red-600 hover:text-red-800 font-medium" onClick={() => handleDelete(blog.id)}>
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {fetchingBlogs && (
+             <div className="flex flex-col justify-center items-center h-full absolute top-0 left-0 bottom-0 right-0">
+             <i className="fas fa-spinner fa-spin text-mypink text-4xl"></i>
+             <p className="text-mypink mt-2">Loading...</p>
+           </div>
+        )}
+        {!fetchingBlogs && blogs.length === 0 && (
+             <div className="flex flex-col justify-center items-center h-full absolute top-0 left-0 bottom-0 right-0">
+             <i className="fas fa-comment-slash text-mypink text-4xl"></i>
+             <p className="text-mypink mt-2">No blogs found</p>
+           </div>
+        )}
+      </div>
     </div>
   );
 };
 
-// Add custom upload adapter plugin to CKEditor
 function MyCustomUploadAdapterPlugin(editor) {
   editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
     return new FirebaseUploadAdapter(loader);

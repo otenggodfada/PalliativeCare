@@ -40,7 +40,7 @@ const SpeedDial1 = () => {
             </IconButton>
           </SpeedDialHandler>
           <SpeedDialContent className="rounded-full border border-blue-gray-50 bg-white shadow-xl shadow-black/10">
-            <SpeedDialAction className="relative">
+            <SpeedDialAction onClick={()=>{navigate('/createblog')}}className="relative">
               <PencilIcon className="h-5 w-5" />
               <Typography {...labelProps}>Blog</Typography>
             </SpeedDialAction>

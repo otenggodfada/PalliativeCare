@@ -27,8 +27,8 @@ import SymptomTracker from './components/symptoms_tracker.jsx';
 import Chat from './components/chat_component.jsx';
 import MyChats from './components/mychats.jsx';
 import CreateBlog from './pages/Blogsposts.jsx';
-
-
+import EditBlog from './components/EditBlog.jsx';
+import BlogListPage from './components/BlogListPage.jsx';
 
 const AuthContext = React.createContext();
 
@@ -132,6 +132,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             </ProtectedRoute>
           }/>
           {/* ... other routes */}
+      
+        <Route path="/edit-blog/:id" element={<EditBlog />} />
           <Route path="/faqs" element={<FAQs />} />
         <Route path="/user-guides" element={<UserGuides />} />
         <Route path="/customer-support" element={<CustomerSupport />} />
