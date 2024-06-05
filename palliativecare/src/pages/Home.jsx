@@ -56,28 +56,29 @@ const Home = () => {
 
 <div className="bg-primaryBackground text-primaryText flex flex-col min-h-screen">
 
-      <header className="bg-accent text-white p-4 fixed top-0 right-0 left-0 w-full ">
-
-        <div className="flex items-center justify-between">
-          <DrawerWithNavigation />
-          <div className="pl-4 flex flex-row items-center">
-            <img className="size-9" src={logo} alt="logo" />
-            <h1 className="text-2xl font-bold">Palliative Care</h1>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="#ff145b"
-            >
-              <path d="M360-160q-19 0-34-11t-22-28l-92-241H40v-80h228l92 244 184-485q7-17 22-28t34-11q19 0 34 11t22 28l92 241h172v80H692l-92-244-184 485q-7 17-22 28t-34 11Z" />
-            </svg>
-          </div>
-          <Dropdown imgg={userd.profilpc} />
-        </div>
-      </header>
+   
 
       <main className="p-4 flex-grow">{navigation}
+      <header className="bg-accent text-white p-4 fixed top-0 right-0 left-0 w-full  ">
+
+<div className="flex items-center justify-between">
+  <DrawerWithNavigation />
+  <div className="pl-4 flex flex-row items-center">
+    <img className="size-9" src={logo} alt="logo" />
+    <h1 className="text-2xl font-bold">Palliative Care</h1>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="24px"
+      viewBox="0 -960 960 960"
+      width="24px"
+      fill="#ff145b"
+    >
+      <path d="M360-160q-19 0-34-11t-22-28l-92-241H40v-80h228l92 244 184-485q7-17 22-28t34-11q19 0 34 11t22 28l92 241h172v80H692l-92-244-184 485q-7 17-22 28t-34 11Z" />
+    </svg>
+  </div>
+  <Dropdown imgg={userd.profilpc} />
+</div>
+</header>
       <SpeedDial></SpeedDial>
       </main>
 
