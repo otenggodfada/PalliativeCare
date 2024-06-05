@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getFirestore, collection, where, addDoc, serverTimestamp, doc, deleteDoc, getDocs, query } from 'firebase/firestore';
+import { getFirestore, collection, where, addDoc, serverTimestamp, doc, deleteDoc, getDocs, query, orderBy } from 'firebase/firestore';
 import { auth } from '../service/firebaseservice';
 import { useNavigate } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -21,11 +21,16 @@ const CreateBlog = () => {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      if (user) {
-        const q = query(collection(db, 'blogs'), where('authorUid', '==', user.uid));
-        const querySnapshot = await getDocs(q);
-        setBlogs(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-        setFetchingBlogs(false); // Set fetching to false after fetching blogs
+      try {
+        if (user) {
+          const q = query(collection(db, 'blogs'), where('authorUid', '==', user.uid), orderBy('timestamp', 'desc'));
+          const querySnapshot = await getDocs(q);
+          setBlogs(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        }
+      } catch (error) {
+        console.error("Error fetching blogs: ", error);
+      } finally {
+        setFetchingBlogs(false);
       }
     };
 
@@ -46,7 +51,7 @@ const CreateBlog = () => {
         throw new Error('User not authenticated');
       }
 
-      const docRef = await addDoc(collection(db, 'blogs'), {
+      await addDoc(collection(db, 'blogs'), {
         title,
         content,
         authorUid: user.uid,
@@ -68,8 +73,7 @@ const CreateBlog = () => {
   const handleDelete = async (blogId) => {
     if (window.confirm('Are you sure you want to delete this blog post?')) {
       await deleteDoc(doc(db, 'blogs', blogId));
-      const updatedBlogs = blogs.filter(blog => blog.id !== blogId);
-      setBlogs(updatedBlogs);
+      setBlogs(blogs.filter(blog => blog.id !== blogId));
     }
   };
 
@@ -133,7 +137,12 @@ const CreateBlog = () => {
             </form>
           )}
         </div>
-        {!fetchingBlogs && blogs.length > 0 && (
+        {fetchingBlogs ? (
+          <div className="flex flex-col justify-center items-center h-full">
+            <i className="fas fa-spinner fa-spin text-mypink text-4xl"></i>
+            <p className="text-mypink mt-2">Loading...</p>
+          </div>
+        ) : blogs.length > 0 ? (
           <div className="w-full max-w-md">
             <h2 className="text-2xl font-bold mb-4">Your Blog List</h2>
             <div className="overflow-hidden">
@@ -153,18 +162,13 @@ const CreateBlog = () => {
               ))}
             </div>
           </div>
-        )}
-        {fetchingBlogs && (
-             <div className="flex flex-col justify-center items-center h-full absolute top-0 left-0 bottom-0 right-0">
-             <i className="fas fa-spinner fa-spin text-mypink text-4xl"></i>
-             <p className="text-mypink mt-2">Loading...</p>
-           </div>
-        )}
-        {!fetchingBlogs && blogs.length === 0 && (
-             <div className="flex flex-col justify-center items-center h-full absolute top-0 left-0 bottom-0 right-0">
-             <i className="fas fa-comment-slash text-mypink text-4xl"></i>
-             <p className="text-mypink mt-2">No blogs found</p>
-           </div>
+        ) : (
+   
+           <div className="flex flex-col justify-center items-center  ">
+            <i className="fas fa-comment-slash text-mypink text-4xl"></i>
+            <p className="text-mypink mt-2">No blogs found</p>
+          </div>
+      
         )}
       </div>
     </div>
