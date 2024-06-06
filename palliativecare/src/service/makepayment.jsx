@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import axios from 'axios';
 import Stepper from '../utils/stepper';
-
+import Header from '../components/hearder';
 const steps = ['Personal Info', 'Address Info', 'Verify Identity', 'Upload Document', 'Payment'];
 
 const PaymentForm = () => {
@@ -101,9 +101,11 @@ const PaymentForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
-      <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-4xl">
-        <Stepper steps={steps} currentStep={step} />
+    <div className="w-full fixed">
+<Header title={'Kyc'}></Header>
+      <div className='p-3 mt-[70px] mb-10'>
+      <div className="bg-white p-3 rounded-lg shadow-xl w-full h-full ">
+        <Stepper  steps={steps} currentStep={step} />
         {step === 0 && (
           <div>
             <h2 className="text-3xl font-bold mb-6">Step 1: Personal Information</h2>
@@ -137,7 +139,7 @@ const PaymentForm = () => {
             />
             <div className="flex justify-end">
               <button
-                className="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600 transition duration-200"
+                className="bg-mypink text-white px-6 py-3 rounded hover:bg-blue-600 transition duration-200"
                 onClick={nextStep}
               >
                 Next
@@ -314,6 +316,7 @@ const PaymentForm = () => {
             </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   );
