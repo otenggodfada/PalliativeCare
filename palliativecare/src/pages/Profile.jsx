@@ -5,7 +5,7 @@ import { readUserinfo, updateUserinfo } from "../service/databasefirebase"; // A
 import { auth } from "../service/firebaseservice";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faStar, faUser, faCalendar, faPhone, faEnvelope, faBriefcase, } from '@fortawesome/free-solid-svg-icons';
-
+import { Link } from "react-router-dom";
 const Profile = () => {
   const [userData, setUserData] = useState({});
   const [editMode, setEditMode] = useState(false);
@@ -247,9 +247,7 @@ const Profile = () => {
                     Verified✔️
                   </button>
                 ) : (
-                  <button className="px-4 py-2 bg-mypink text-white rounded-full hover:bg-blue-500 focus:outline-none">
-                    Verify
-                  </button>
+               <Link to={'/kyc'}  className="px-4 py-2 bg-mypink text-white rounded-full hover:bg-blue-500 focus:outline-none ">Verify</Link>
                 )}
               </>
             )}

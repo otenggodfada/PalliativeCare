@@ -1,6 +1,6 @@
 /** @format */
 
-import { rating } from "@material-tailwind/react";
+
 import {
   auth,
   db,
@@ -12,13 +12,13 @@ import {
   storage,
 } from "../service/firebaseservice";
 import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
-import { data } from "autoprefixer";
+
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { Timestamp } from "firebase/firestore";
+
 // upload file to db
 
 // Function to upload profile image to Firebase Storage
@@ -96,9 +96,9 @@ const handleSignUp = async (
       specialists: specialists,
       email: email,
       experience: experience,
-      verify:verify,
-      rating:rating,
-      Id:auth.currentUser.uid
+      verify: verify,
+      rating: rating,
+      Id: auth.currentUser.uid,
     });
     errr("User signed up successfully!");
     console.log("User signed up:", userCredential.user);
@@ -118,13 +118,16 @@ const handleSignUp = async (
 const handleSignOut = async (navii) => {
   try {
     await signOut(auth);
-    navii("/login");
+ window.confirm('Are you sure?')
+ navii("/login");
     // alert("signout successfully");
   } catch (error) {
     alert("couldnt");
   }
 };
 
+
+//Handle login
 const handlelogin = async (email, password, navii, errr, setcolor) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
@@ -138,6 +141,7 @@ const handlelogin = async (email, password, navii, errr, setcolor) => {
     setcolor("mypink");
   }
 };
+
 // Write User info to db
 const handleUserinfo = async () => {
   try {
@@ -145,7 +149,7 @@ const handleUserinfo = async () => {
       firstname: "Ada",
       lastname: "Lovelace",
     });
-  } catch (error) {}
+  } catch (error) { }
 };
 // Read or listen to user info from db
 const readUserinfo = (userdetails) => {
@@ -171,7 +175,7 @@ const readUserinfo = (userdetails) => {
   }
 };
 
-// Function to update user info in Firestore
+// Function to update user info in Firestore single
 export const updateUserinfo = async (userData) => {
   const user = auth.currentUser;
   if (user) {
@@ -179,7 +183,6 @@ export const updateUserinfo = async (userData) => {
     await setDoc(docRef, userData, { merge: true });
   }
 };
-
 
 //Read or listen to public users
 
@@ -190,8 +193,6 @@ const getAllDocuments = async () => {
 
     // Extract the data from each document
     const documents = querySnapshot.docs.map((doc) => doc.data());
-
-   
 
     // Return the array of document data
     return documents;
@@ -218,10 +219,6 @@ const setAllDocuments = async (documents) => {
     console.error("Error setting documents: ", error);
   }
 };
-
-
-
-
 
 export {
   handleSignUp,

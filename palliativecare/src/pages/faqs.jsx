@@ -71,7 +71,7 @@ const FAQs = () => {
     <div className="">
   <Header title={'Frequently Asked Questions'}></Header>
 
-      <div className="px-2 pt-20 mb-3">
+      <div className="px-2 pt-20 mb-3 mt-10">
         {faqs.map((faq, index) => (
           <div
             key={index}

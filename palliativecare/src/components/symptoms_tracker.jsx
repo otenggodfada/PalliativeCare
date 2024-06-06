@@ -1,9 +1,11 @@
 import  { useState, useEffect } from 'react';
 import { db, collection, getDocs, setDoc, doc, onSnapshot, deleteDoc, getDoc } from "../service/firebaseservice";
 import { auth } from "../service/firebaseservice";
-import { FaEdit, FaTrash, FaPlus, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaPlus, FaArrowLeft, FaArrowRight, FaDownload } from 'react-icons/fa';
+
 import Header from './hearder';
 import { Input } from "@material-tailwind/react";
+import jsPDF from 'jspdf';
 const SymptomTracker = () => {
   const [symptoms, setSymptoms] = useState([]);
   const [newSymptom, setNewSymptom] = useState('');
@@ -25,6 +27,33 @@ const SymptomTracker = () => {
   const [logEntry, setLogEntry] = useState('');
   const [trackingMode, setTrackingMode] = useState(false);
   const [logDate, setLogDate] = useState('');
+
+
+
+
+ 
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.text('Symptom Tracker Records', 10, 10);
+    filteredSymptoms.forEach((symptom, index) => {
+      const y = 20 + (index * 50); // Adjusted spacing for each symptom
+      doc.text(`${index + 1}. ${symptom.name}`, 10, y);
+      doc.text(`  Severity: ${symptom.severity}`, 10, y + 10);
+      doc.text(`  Duration: ${symptom.duration}`, 10, y + 20);
+      doc.text(`  Medication: ${symptom.medication}`, 10, y + 30);
+      doc.text(`  Triggers: ${symptom.triggers}`, 10, y + 40);
+      doc.text(`  Notes: ${symptom.notes}`, 10, y + 50);
+      if (symptom.logs) {
+        symptom.logs.forEach((log, logIndex) => {
+          doc.text(`    Log ${logIndex + 1} - ${log.date}: ${log.entry}`, 20, y + 60 + (logIndex * 10));
+        });
+      }
+      doc.text('--------------------------------------------', 10, y + 70); // Separator line
+    });
+    doc.save('symptom-tracker-records.pdf');
+  };
+  
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -168,25 +197,25 @@ const SymptomTracker = () => {
     <div>
       <Header title={'Symptom Tracker'} />
       {showModal && selectedSymptom && (
-     <div className=' mt-20 m-4'>
-           <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={handleCloseModal}>&times;</span>
-            <h2>{selectedSymptom.name}</h2>
-            <p><strong>Severity:</strong> {selectedSymptom.severity}</p>
-            <p><strong>Duration:</strong> {selectedSymptom.duration}</p>
-            <p><strong>Medication:</strong> {selectedSymptom.medication}</p>
-            <p><strong>Triggers:</strong> {selectedSymptom.triggers}</p>
-            <p><strong>Notes:</strong> {selectedSymptom.notes}</p>
-            <h3>Logs:</h3>
-            <ul>
-              {selectedSymptom.logs && selectedSymptom.logs.map((log, index) => (
-                <li key={index}><strong>{log.date}:</strong> {log.entry}</li>
-              ))}
-            </ul>
+        <div className=' mt-20 m-4'>
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close" onClick={handleCloseModal}>&times;</span>
+              <h2>{selectedSymptom.name}</h2>
+              <p><strong>Severity:</strong> {selectedSymptom.severity}</p>
+              <p><strong>Duration:</strong> {selectedSymptom.duration}</p>
+              <p><strong>Medication:</strong> {selectedSymptom.medication}</p>
+              <p><strong>Triggers:</strong> {selectedSymptom.triggers}</p>
+              <p><strong>Notes:</strong> {selectedSymptom.notes}</p>
+              <h3>Logs:</h3>
+              <ul>
+                {selectedSymptom.logs && selectedSymptom.logs.map((log, index) => (
+                  <li key={index}><strong>{log.date}:</strong> {log.entry}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
-     </div>
       )}
       <div className="bg-white shadow-md rounded-lg mb-3 m-2 mt-20 p-4">
         <div className="items-center mt-8">
@@ -330,6 +359,12 @@ const SymptomTracker = () => {
             </li>
           ))}
         </ul>
+        <button 
+                onClick={exportToPDF} 
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600 transition duration-200 ease-in-out"
+              >
+                Download Records <FaDownload className="inline-block ml-2" />
+              </button>
         <div className="flex items-center justify-between mt-4">
           <button 
             onClick={() => paginate(currentPage - 1)} 
@@ -341,11 +376,12 @@ const SymptomTracker = () => {
           <span>Page {currentPage}</span>
           <button 
             onClick={() => paginate(currentPage + 1)} 
-            disabled={currentSymptoms.length < symptomsPerPage}
-            className={`px-3 py-1 rounded-lg text-sm ${currentSymptoms.length < symptomsPerPage ? 'bg-gray-300' : 'bg-blue-500 text-white hover:bg-blue-600 transition duration-200 ease-in-out'}`}
+            disabled={currentPage === Math.ceil(symptoms.length / symptomsPerPage)}
+            className={`px-3 py-1 rounded-lg text-sm ${currentPage === Math.ceil(symptoms.length / symptomsPerPage) ? 'bg-gray-300' : 'bg-blue-500 text-white hover:bg-blue-600 transition duration-200 ease-in-out'}`}
           >
             <FaArrowRight />
           </button>
+        
         </div>
       </div>
     </div>

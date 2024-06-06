@@ -12,11 +12,7 @@ import {
 import {
  PlusCircleIcon,
  PencilIcon,
- PlusIcon,
-  HomeIcon,
-  CogIcon,
-  ClipboardDocumentIcon,
-  Square3Stack3DIcon,
+
   ClipboardDocumentListIcon,
   CircleStackIcon,
 } 
@@ -48,7 +44,7 @@ const SpeedDial1 = ({onchangedd}) => {
       <div onMouseEnter={()=>{onchangedd(true)}} onMouseLeave={()=>{onchangedd(false)}} onClick={()=>{}} className="fixed bottom-0 right-0 mb-[70px] pr-5 ">
      <SpeedDial  >
           <SpeedDialHandler >
-            <IconButton size="lg" className="rounded-full bg-mypink border border-white shadow-2xl">
+            <IconButton size="lg" className="rounded-full bg-mypink border border-white  shadow-[#838485fb] shadow-sm">
               <PlusCircleIcon className="h-5 w-5 transition-transform group-hover:rotate-45" />
             </IconButton>
           </SpeedDialHandler>

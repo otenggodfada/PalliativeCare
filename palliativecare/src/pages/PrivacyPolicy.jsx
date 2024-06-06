@@ -7,7 +7,7 @@ const PrivacyPolicy = () => {
           <Header title={'Privacy Policy and Terms of Service'}></Header>
      
 
-      <div className="px-2 pt-20 mb-3">
+      <div className="px-2 pt-20 mb-3 mt-10">
         <section>
           <Typography variant="h5" className="mb-2">Privacy Policy</Typography>
           <Typography variant="h6" className="mb-2">Introduction</Typography>

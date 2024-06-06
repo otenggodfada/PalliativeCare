@@ -30,7 +30,7 @@ import CreateBlog from './pages/Blogsposts.jsx';
 import EditBlog from './components/EditBlog.jsx';
 import BlogListPage from './components/BlogListPage.jsx';
 import BlogDetailPage from './components/BlogDetailPage.jsx';
-
+import PaymentForm from './service/makepayment.jsx';
 const AuthContext = React.createContext();
 
 const AuthProvider = ({ children }) => {
@@ -110,6 +110,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route path='/chat' element={
             <ProtectedRoute>
               <Chat />
+            </ProtectedRoute>
+          }/>
+              <Route path='/kyc' element={
+            <ProtectedRoute>
+              <PaymentForm></PaymentForm>
             </ProtectedRoute>
           }/>
           <Route path='/dashboard' element={
