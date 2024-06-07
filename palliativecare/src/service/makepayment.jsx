@@ -43,7 +43,7 @@ const PaymentForm = () => {
 
   const makePayment = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/initialize-payment', {
+      const response = await axios.post('https://us-central1-palliativecare-26a3b.cloudfunctions.net/api/initialize-payment', {
         tx_ref: generateTxRef(),
         amount: 50,
         currency: selectedCurrency,

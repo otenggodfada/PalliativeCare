@@ -1,5 +1,6 @@
 /** @format */
-
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { useEffect, useState } from "react";
 import { readUserinfo, updateUserinfo } from "../service/databasefirebase"; // Assuming you have an update function
 import { auth } from "../service/firebaseservice";
@@ -10,13 +11,19 @@ const Profile = () => {
   const [userData, setUserData] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [editableData, setEditableData] = useState({});
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
+      try {
         readUserinfo(setUserData);
+        setLoading(true);
+      } catch (error) {
+        setLoading(false);
+      }
       } else {
         setUserData({});
+        
       }
     });
 
@@ -62,7 +69,35 @@ const Profile = () => {
 
   return (
     <div className="max-w-md mx-auto mt-16 mb-[60px] bg-white shadow-lg rounded-lg overflow-hidden">
-      <div
+      <div>
+
+     {
+      loading? (  Array(1).fill().map((_, index) => (
+        <div key={index} className="mb-4 mt-3 h-full">
+          <div className="flex p-2 w-full h-full bg-white rounded-2xl shadow-2xl flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center">
+              <div>
+                <Skeleton circle={true} height={100} width={100} />
+              </div>
+              <div className="p-2 flex-col  flex justify-center space-y-1 items-center">
+                <div className="text-black text-base font-bold font-['Inter']">
+                  <Skeleton width={100} />
+                </div>
+                <Skeleton width={150} />
+                <Skeleton width={100} />
+                <div className="flex">
+                  <Skeleton width={20} height={20} />
+                  <Skeleton width={50} />
+                </div>
+              </div>
+            </div>
+            <div className="pt-3 flex flex-row gap-3 items-center">
+              <Skeleton height={30} width={70} />       <Skeleton height={30} width={70} />
+            </div>
+          </div>
+        </div>
+      ))):(<>
+       <div
         className="bg-cover bg-center h-56"
         style={{
           backgroundImage:
@@ -253,6 +288,9 @@ const Profile = () => {
             )}
           </div>
         </div>
+      </>)
+     }
+      </div>
       </div>
     );
   };

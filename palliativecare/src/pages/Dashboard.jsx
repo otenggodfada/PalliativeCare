@@ -2,7 +2,8 @@
 
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
-
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import React from "react";
 import ChatOne from "../components/chatgpt";
 import { useEffect, useState } from "react";
@@ -24,7 +25,7 @@ const Dashboard = () => {
   const [userData, setUserData] = useState({});
   const [users, setUsers] = useState([]);
 const [close, setclose] = useState(false);
-
+const [loading, setLoading] = useState(true); 
 
 
   useEffect(() => {
@@ -43,9 +44,11 @@ const [close, setclose] = useState(false);
     const fetchDocuments = async () => {
       try {
         const documents = await getAllDocuments(); // Call the function to fetch documents
-        setUsers(documents); // Update state with the fetched documents
+        setUsers(documents);
+        setLoading(false);  // Update state with the fetched documents
       } catch (error) {
         console.error("Error fetching documents: ", error);
+        setLoading(false); 
       }
     };
 
@@ -166,7 +169,38 @@ const [close, setclose] = useState(false);
     </div>
 
     <div className=" space-y-3 p-0 mb-20">
-      {filteredUsers.map((user, index) => (
+      {
+      loading ? (
+        // Skeleton Loading State
+        Array(3).fill().map((_, index) => (
+          <div key={index} className="mb-4 mt-3">
+            <div className="flex p-2 w-full h-17 bg-white rounded-2xl shadow-2xl flex-col">
+              <div className="flex">
+                <div>
+                  <Skeleton circle={true} height={50} width={50} />
+                </div>
+                <div className="p-2 flex-col flex justify-center space-y-1">
+                  <div className="text-black text-base font-bold font-['Inter']">
+                    <Skeleton width={100} />
+                  </div>
+                  <Skeleton width={150} />
+                  <Skeleton width={100} />
+                  <div className="flex">
+                    <Skeleton width={20} height={20} />
+                    <Skeleton width={50} />
+                  </div>
+                </div>
+              </div>
+              <div className="pt-3">
+                <Skeleton height={30} />
+              </div>
+            </div>
+          </div>
+        ))
+      ):
+      
+      
+      filteredUsers.map((user, index) => (
         <div key={index} className="mb-4 mt-3">
           <div className="flex p-2 w-full h-17  bg-white rounded-2xl shadow-2xl flex-col">
             {/* Profile Card */}
