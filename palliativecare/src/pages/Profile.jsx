@@ -17,7 +17,7 @@ const Profile = () => {
       if (user) {
       try {
         readUserinfo(setUserData);
-        setLoading(true);
+        setLoading(false);
       } catch (error) {
         setLoading(false);
       }
@@ -73,7 +73,7 @@ const Profile = () => {
 
      {
       loading? (  Array(1).fill().map((_, index) => (
-        <div key={index} className="mb-4 mt-3 h-full">
+        <div key={index} className="mb-4 mt-3 h-full flex justify-center items-center">
           <div className="flex p-2 w-full h-full bg-white rounded-2xl shadow-2xl flex-col justify-center items-center">
             <div className="flex flex-col justify-center items-center">
               <div>
